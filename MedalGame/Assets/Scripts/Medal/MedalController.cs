@@ -1,18 +1,38 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-/// ���N���X�Ŏg�p����Rigidbody��ێ�����N���X
+/// 他クラスで使用するRigidbodyを保持するクラス
 /// </summary>
 public class MedalController : MonoBehaviour
 {
-    // �������g�ɂ��Ă���Rigidbody���擾���ĕێ�����v���p�e�B
+    // メダルが落下したときの削除位置
+    private const float DELETION_POSITION_Y = -10.0f;
+
+    // 自分自身についているRigidbodyを取得して保持するプロパティ
     public Rigidbody MedalRigidbody { get; private set; }
 
+    // メダルプール管理クラス参照用
+    private MedalPoolManager medalPoolManager = null;
+
     /// <summary>
-    /// Rigidbody���擾���ăv���p�e�B�ɕێ����鏈��
+    /// Rigidbodyを取得してプロパティに保持する処理
     /// </summary>
     private void Awake()
     {
         MedalRigidbody = GetComponent<Rigidbody>();
+        medalPoolManager = FindAnyObjectByType<MedalPoolManager>();
+    }
+
+    /// <summary>
+    /// 特定の位置にメダルが落下したときにメダルを返却する処理
+    /// </summary>
+    private void OnCollisionEnter(Collision collision)
+    {
+        // メダルが地面に衝突したとき、メダルを返却する
+        if (collision.gameObject.CompareTag("CollectionPosition"))
+        {
+            medalPoolManager.ReturnMedal(gameObject);
+            Debug.Log("メダルが地面に衝突したため、メダルを返却しました");
+        }
     }
 }

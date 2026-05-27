@@ -1,44 +1,44 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 /// <summary>
-/// ƒIƒuƒWƒFƒNƒgƒv[ƒ‹‚©‚çƒƒ_ƒ‹‚ğæ‚èo‚µ‰Šú”z’u‚·‚éˆ—
+/// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ—ãƒ¼ãƒ«ã‹ã‚‰ãƒ¡ãƒ€ãƒ«ã‚’å–ã‚Šå‡ºã—åˆæœŸé…ç½®ã™ã‚‹å‡¦ç†
 /// </summary>
 public class MedalSpawner : MonoBehaviour
 {
-    // ƒƒ_ƒ‹‚Ì¶¬ˆÊ’u‚ğƒ‰ƒ“ƒ_ƒ€‚É‚·‚é‚½‚ß‚Ì”ÍˆÍ
-    // ‰º’i‚Ìƒ‰ƒ“ƒ_ƒ€”ÍˆÍ
+    // ãƒ¡ãƒ€ãƒ«ã®ç”Ÿæˆä½ç½®ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«ã™ã‚‹ãŸã‚ã®ç¯„å›²
+    // ä¸‹æ®µã®ãƒ©ãƒ³ãƒ€ãƒ ç¯„å›²
     private const float RANDOM_RANGE_LOWER_X = 35.0f;
     private const float RANDOM_RANGE_LOWER_Z = 12.0f;
-    // ã’i‚Ìƒ‰ƒ“ƒ_ƒ€”ÍˆÍ
+    // ä¸Šæ®µã®ãƒ©ãƒ³ãƒ€ãƒ ç¯„å›²
     private const float RANDOM_RANGE_UPPER_X = 10.0f;
     private const float RANDOM_RANGE_UPPER_Z = 15.0f;
 
-    // ‰º’i‰Šúƒƒ_ƒ‹–‡”
+    // ä¸‹æ®µåˆæœŸãƒ¡ãƒ€ãƒ«æšæ•°
     private const int INITIAL_MEDAL_COUNT_LOWER = 70;
 
-    // ã’i‰Šúƒƒ_ƒ‹–‡”
+    // ä¸Šæ®µåˆæœŸãƒ¡ãƒ€ãƒ«æšæ•°
     private const int INITIAL_MEDAL_COUNT_UPPER = 20;
 
-    [Header("ƒƒ_ƒ‹ƒv[ƒ‹ŠÇ—ƒNƒ‰ƒX")]
+    [Header("ãƒ¡ãƒ€ãƒ«ãƒ—ãƒ¼ãƒ«ç®¡ç†ã‚¯ãƒ©ã‚¹")]
     [SerializeField] private MedalPoolManager medalPoolManager = null;
 
-    [Header("ƒƒ_ƒ‹‚ğÅ‰‚É”z’u‚·‚é‚Æ‚«‚Ég—p‚·‚éˆÊ’u")]
+    [Header("ãƒ¡ãƒ€ãƒ«ã‚’æœ€åˆã«é…ç½®ã™ã‚‹ã¨ãã«ä½¿ç”¨ã™ã‚‹ä½ç½®")]
     [SerializeField] private Transform medalSpawnerPositionLower = null;
     [SerializeField] private Transform medalSpawnerPositionUpper = null;
 
-    [Header("—¼’[‚É‚ ‚éƒK[ƒhƒIƒuƒWƒFƒNƒg")]
+    [Header("ä¸¡ç«¯ã«ã‚ã‚‹ã‚¬ãƒ¼ãƒ‰ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ")]
     [SerializeField] private GameObject[] sideGuard = null;
 
     /// <summary>
-    /// ƒIƒuƒWƒFƒNƒgƒv[ƒ‹‚©‚çæ‚èo‚µ‚½ƒƒ_ƒ‹‚ğ‰Šú”z’u‚·‚éˆ—
+    /// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ—ãƒ¼ãƒ«ã‹ã‚‰å–ã‚Šå‡ºã—ãŸãƒ¡ãƒ€ãƒ«ã‚’åˆæœŸé…ç½®ã™ã‚‹å‡¦ç†
     /// </summary>
     private void Start()
     {
-        // ‰º’i‚Æã’i‚Å•ª‚¯‚Ä¶¬‚·‚é
+        // ä¸‹æ®µã¨ä¸Šæ®µã§åˆ†ã‘ã¦ç”Ÿæˆã™ã‚‹
         SpawnMedal(INITIAL_MEDAL_COUNT_LOWER, medalSpawnerPositionLower, RANDOM_RANGE_LOWER_X, RANDOM_RANGE_LOWER_Z);
         SpawnMedal(INITIAL_MEDAL_COUNT_UPPER, medalSpawnerPositionUpper, RANDOM_RANGE_UPPER_X, RANDOM_RANGE_UPPER_Z);
 
-        // —¼’[‚ÌƒK[ƒhƒIƒuƒWƒFƒNƒg‚ğ—LŒø‚É‚·‚é
+        // ä¸¡ç«¯ã®ã‚¬ãƒ¼ãƒ‰ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æœ‰åŠ¹ã«ã™ã‚‹
         foreach (GameObject guard in sideGuard)
         {
             guard.SetActive(true);
@@ -46,29 +46,29 @@ public class MedalSpawner : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒƒ_ƒ‹‚ğƒIƒuƒWƒFƒNƒgƒv[ƒ‹‚©‚çæ‚èo‚µAw’è‚µ‚½ˆÊ’u‚Éƒ‰ƒ“ƒ_ƒ€‚É”z’u‚·‚éˆ—
+    /// ãƒ¡ãƒ€ãƒ«ã‚’ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ—ãƒ¼ãƒ«ã‹ã‚‰å–ã‚Šå‡ºã—ã€æŒ‡å®šã—ãŸä½ç½®ã«ãƒ©ãƒ³ãƒ€ãƒ ã«é…ç½®ã™ã‚‹å‡¦ç†
     /// </summary>
     private void SpawnMedal(int spawnCount, Transform medalSpawnerPosition, float randomRangeX, float randomRangeZ)
     {
         for (int i = 0; i < spawnCount; i++)
         {
-            // ƒƒ_ƒ‹‚ğæ‚èo‚·
+            // ãƒ¡ãƒ€ãƒ«ã‚’å–ã‚Šå‡ºã™
             GameObject rentedMedal = medalPoolManager.GetMedal();
 
-            // ƒƒ_ƒ‹‚Ì§ŒäƒNƒ‰ƒX‚ğæ“¾‚·‚é
+            // ãƒ¡ãƒ€ãƒ«ã®åˆ¶å¾¡ã‚¯ãƒ©ã‚¹ã‚’å–å¾—ã™ã‚‹
             MedalController medalController = rentedMedal.GetComponent<MedalController>();
 
-            // ¶¬ˆÊ’u‚ğŒˆ’è
+            // ç”Ÿæˆä½ç½®ã‚’æ±ºå®š
             Vector3 generationPosition =
                 medalSpawnerPosition.position +
                 new Vector3(
                     Random.Range(-randomRangeX, randomRangeX),
                     0.0f,
-                    Random.Range(-randomRangeZ, randomRangeZ)   // ƒvƒbƒVƒƒ[”ÍˆÍ‚É‚à—‚¿‚é‚æ‚¤AZ²•ûŒü‚ÍL‚ß‚Éƒ‰ƒ“ƒ_ƒ€”z’u‚·‚é
+                    Random.Range(-randomRangeZ, randomRangeZ)   // ãƒ—ãƒƒã‚·ãƒ£ãƒ¼ç¯„å›²ã«ã‚‚è½ã¡ã‚‹ã‚ˆã†ã€Zè»¸æ–¹å‘ã¯åºƒã‚ã«ãƒ©ãƒ³ãƒ€ãƒ é…ç½®ã™ã‚‹
                     );
 
-            // Rigidbody‘¤‚ÌˆÊ’u‚ğ•ÏX‚·‚é
-            // Rigidbody.position‚ğg—p‚µ‚ÄA•¨—‰‰Z‚É‚æ‚éˆÊ’u•â³‚Ì•s®‡‚ğ–h‚®
+            // Rigidbodyå´ã®ä½ç½®ã‚’å¤‰æ›´ã™ã‚‹
+            // Rigidbody.positionã‚’ä½¿ç”¨ã—ã¦ã€ç‰©ç†æ¼”ç®—ã«ã‚ˆã‚‹ä½ç½®è£œæ­£ã®ä¸æ•´åˆã‚’é˜²ã
             medalController.MedalRigidbody.position = generationPosition;
         }
     }
