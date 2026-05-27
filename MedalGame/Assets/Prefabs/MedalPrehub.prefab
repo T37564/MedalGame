@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6965165212141331659}
   - component: {fileID: 6860249135745340432}
   - component: {fileID: 5741706852133893940}
+  - component: {fileID: 2293472012647169355}
   m_Layer: 0
   m_Name: MedalPrehub
   m_TagString: Medal
@@ -30,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.31, y: 8.11, z: -16.1}
-  m_LocalScale: {x: 6, y: 0.4, z: 6}
+  m_LocalScale: {x: 8, y: 0.4, z: 8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -102,7 +103,7 @@ Rigidbody:
   serializedVersion: 5
   m_Mass: 0.1
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 0.2
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -117,7 +118,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 80
+  m_Constraints: 32
   m_CollisionDetection: 0
 --- !u!65 &5741706852133893940
 BoxCollider:
@@ -138,5 +139,17 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.95, y: 2, z: 0.95}
+  m_Size: {x: 0.95, y: 1, z: 0.95}
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &2293472012647169355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8782643920726251243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2b95a746e3833945b986021fbf48865, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MedalController

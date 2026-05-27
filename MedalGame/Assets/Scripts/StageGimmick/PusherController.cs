@@ -6,7 +6,8 @@ using UnityEngine;
 public class PusherController : MonoBehaviour
 {
     // プッシャーの速度
-    private const float MOVE_SPEED = 8.0f;
+    private const float FORWARD_SPEED = 2.0f;
+    private const float BACK_SPEED = 5.0f;
 
     // 到着判定差
     private const float ARRIVAL_JUDGMENT_DIFFERENCE = 0.01f;
@@ -15,6 +16,9 @@ public class PusherController : MonoBehaviour
 
     [Header("プッシャー本体")]
     [SerializeField] private Transform upperSection = null;
+
+    [Header("プッシャーRigidbody")]
+    [SerializeField] private Rigidbody upperSectionRigidbody = null;
 
     [Header("プッシャー開始位置")]
     [SerializeField] private Transform startPoint = null;
@@ -27,20 +31,24 @@ public class PusherController : MonoBehaviour
     // 現在向かっている目的地
     private Transform currentTarget = null;
 
+    //　現在の速度
+    private float currentSpeed = 0.0f;
+
 
     /// <summary>
-    /// プッシャーを移動させるための目的地を入れる
+    /// プッシャーを移動させるための目的地、速度を入れる
     /// </summary>
     private void Start()
     {
         currentTarget = endPoint;
+        currentSpeed = FORWARD_SPEED;
     }
 
 
     /// <summary>
     /// プッシャーを往復移動させる
     /// </summary>
-    private void Update()
+    private void FixedUpdate()
     {
         PusherMovement(currentTarget);
 
@@ -52,6 +60,9 @@ public class PusherController : MonoBehaviour
         {
             // 行き先切り替え
             currentTarget = currentTarget == endPoint ? startPoint : endPoint;
+
+            // 速度切り替え
+            currentSpeed = currentTarget == endPoint ? FORWARD_SPEED : BACK_SPEED;
         }
     }
 
@@ -63,11 +74,14 @@ public class PusherController : MonoBehaviour
     {
         // 一定速度で移動させるためMoveTowardsを使用
         // MoveTowards(現在位置, 目的地, 移動量);
-        upperSection.position =
+        Vector3 nextPosition =
             Vector3.MoveTowards(
-                upperSection.position,
+                upperSectionRigidbody.position,
                 movePoint.position,
-                MOVE_SPEED * Time.deltaTime
+                currentSpeed * Time.fixedDeltaTime
                 );
+
+        // Rigidbody側の位置を変更する
+        upperSectionRigidbody.MovePosition(nextPosition);
     }
 }
