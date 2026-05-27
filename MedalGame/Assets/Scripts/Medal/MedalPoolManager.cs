@@ -1,40 +1,40 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.Pool;
 
 /// <summary>
-/// ƒƒ_ƒ‹‚ğƒIƒuƒWƒFƒNƒgƒv[ƒ‹‚ÅŠÇ—‚·‚éˆ—
+/// ãƒ¡ãƒ€ãƒ«ã‚’ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ—ãƒ¼ãƒ«ã§ç®¡ç†ã™ã‚‹å‡¦ç†
 /// </summary>
 public class MedalPoolManager : MonoBehaviour
 {
-    // ƒƒ_ƒ‹‚Ì‰Šú”
+    // ãƒ¡ãƒ€ãƒ«ã®åˆæœŸæ•°
     private const int DEFAULT_POOL_SIZE = 100;
 
-    // ƒƒ_ƒ‹‚ÌÅ‘å”
+    // ãƒ¡ãƒ€ãƒ«ã®æœ€å¤§æ•°
     private const int MAX_POOL_SIZE = 200;
 
-    [Header("•¡»‚·‚éƒƒ_ƒ‹")]
+    [Header("è¤‡è£½ã™ã‚‹ãƒ¡ãƒ€ãƒ«")]
     [SerializeField] private GameObject medalPrefab = null;
 
-    // UnityŒö®ƒIƒuƒWƒFƒNƒgƒv[ƒ‹
+    // Unityå…¬å¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ—ãƒ¼ãƒ«
     private ObjectPool<GameObject> medalPool = null;
 
     /// <summary>
-    /// ƒIƒuƒWƒFƒNƒgƒv[ƒ‹‚Ì‰Šú‰»
+    /// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ—ãƒ¼ãƒ«ã®åˆæœŸåŒ–
     /// </summary>
     private void Awake()
     {
         medalPool = new ObjectPool<GameObject>(
-           CreateMedal,     // V‚µ‚­ì‚é
-           OnTakeMedal,     // g—pŠJn
-           OnReturnMedal,   // –ß‚·
-           OnDestroyMedal,  // íœ
-           true,            // “¯‚¶ƒIƒuƒWƒFƒNƒg‚Ö‚Ìd•¡•Ô‹p‚ğ–h‚®
-           100,             // ‰Šú”
-           200              // Å‘å”
+           CreateMedal,         // æ–°ã—ãä½œã‚‹
+           OnTakeMedal,         // ä½¿ç”¨é–‹å§‹
+           OnReturnMedal,       // æˆ»ã™
+           OnDestroyMedal,      // å‰Šé™¤
+           true,                // åŒã˜ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¸ã®é‡è¤‡è¿”å´ã‚’é˜²ã
+           DEFAULT_POOL_SIZE,   // åˆæœŸæ•°
+           MAX_POOL_SIZE        // æœ€å¤§æ•°
          );
 
-        // –‘O¶¬
-        for (int i = 0; i < 100; i++)
+        // äº‹å‰ç”Ÿæˆ
+        for (int i = 0; i < DEFAULT_POOL_SIZE; i++)
         {
             GameObject medal = medalPool.Get();
             medalPool.Release(medal);
@@ -43,7 +43,7 @@ public class MedalPoolManager : MonoBehaviour
 
 
     /// <summary>
-    /// ƒƒ_ƒ‹‚ğ•¡»‚·‚éˆ—
+    /// ãƒ¡ãƒ€ãƒ«ã‚’è¤‡è£½ã™ã‚‹å‡¦ç†
     /// </summary>
     private GameObject CreateMedal()
     {
@@ -51,7 +51,7 @@ public class MedalPoolManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒƒ_ƒ‹‚ğæ‚èo‚µ•\¦‚·‚éˆ—
+    /// ãƒ¡ãƒ€ãƒ«ã‚’å–ã‚Šå‡ºã—è¡¨ç¤ºã™ã‚‹å‡¦ç†
     /// </summary>
     private void OnTakeMedal(GameObject medal)
     {
@@ -60,7 +60,7 @@ public class MedalPoolManager : MonoBehaviour
 
 
     /// <summary>
-    /// ƒƒ_ƒ‹‚ğƒv[ƒ‹‚É–ß‚µ‚Ä”ñ•\¦‚É‚·‚éˆ—
+    /// ãƒ¡ãƒ€ãƒ«ã‚’ãƒ—ãƒ¼ãƒ«ã«æˆ»ã—ã¦éè¡¨ç¤ºã«ã™ã‚‹å‡¦ç†
     /// </summary>
     private void OnReturnMedal(GameObject medal)
     {
@@ -68,7 +68,7 @@ public class MedalPoolManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒƒ_ƒ‹‚ğíœ‚·‚éˆ—
+    /// ãƒ¡ãƒ€ãƒ«ã‚’å‰Šé™¤ã™ã‚‹å‡¦ç†
     /// </summary>
     private void OnDestroyMedal(GameObject medal)
     {
@@ -77,10 +77,19 @@ public class MedalPoolManager : MonoBehaviour
 
 
     /// <summary>
-    /// ŠO•”‚©‚çƒƒ_ƒ‹‚ğØ‚è‚ê‚é‚æ‚¤‚É‚·‚éˆ—
+    /// å¤–éƒ¨ã‹ã‚‰ãƒ¡ãƒ€ãƒ«ã‚’å€Ÿã‚Šã‚Œã‚‹ã‚ˆã†ã«ã™ã‚‹å‡¦ç†
     /// </summary>
     public GameObject GetMedal()
     {
         return medalPool.Get();
+    }
+
+
+    /// <summary>
+    /// å¤–éƒ¨ã‹ã‚‰ãƒ¡ãƒ€ãƒ«ã‚’è¿”ã›ã‚‹ã‚ˆã†ã«ã™ã‚‹å‡¦ç†
+    /// </summary>
+    public void ReturnMedal(GameObject medal)
+    {
+        medalPool.Release(medal);
     }
 }
