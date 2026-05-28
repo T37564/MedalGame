@@ -6,7 +6,7 @@ using UnityEngine;
 public class PusherController : MonoBehaviour
 {
     // プッシャーの速度
-    private const float FORWARD_SPEED = 2.0f;
+    private const float FORWARD_SPEED = 3.0f;
     private const float BACK_SPEED = 5.0f;
 
     // 到着判定差

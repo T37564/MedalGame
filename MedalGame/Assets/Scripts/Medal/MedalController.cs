@@ -5,9 +5,6 @@
 /// </summary>
 public class MedalController : MonoBehaviour
 {
-    // メダルが落下したときの削除位置
-    private const float DELETION_POSITION_Y = -10.0f;
-
     // 自分自身についているRigidbodyを取得して保持するプロパティ
     public Rigidbody MedalRigidbody { get; private set; }
 
@@ -31,8 +28,21 @@ public class MedalController : MonoBehaviour
         // メダルが地面に衝突したとき、メダルを返却する
         if (collision.gameObject.CompareTag("CollectionPosition"))
         {
+            ResetRigidBody();
             medalPoolManager.ReturnMedal(gameObject);
             Debug.Log("メダルが地面に衝突したため、メダルを返却しました");
         }
     }
+
+
+    /// <summary>
+    /// 回転が残らないようにrigidbodyをリセットする処理    
+    /// </summary>
+    private void ResetRigidBody()
+    {
+        // Rigidbodyの速度をリセットする
+        MedalRigidbody.linearVelocity = Vector3.zero;
+        MedalRigidbody.angularVelocity = Vector3.zero;
+    }
+
 }
