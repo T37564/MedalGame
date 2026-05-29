@@ -70,10 +70,11 @@ public class PlayerController : MonoBehaviour
             if (0.0f <= viewportPoint.x && viewportPoint.x <= 1.0f &&
                 0.0f <= viewportPoint.y && viewportPoint.y <= 1.0f)
             {
-                isAimValid = true;
-
                 // Rayを飛ばすメソッド実行
                 rayController.RayLaunch(touchPosition, launchCamera);
+
+                isAimValid = true;
+
             }
             else isAimValid = false;
         }

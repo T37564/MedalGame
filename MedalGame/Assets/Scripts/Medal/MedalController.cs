@@ -29,7 +29,6 @@ public class MedalController : MonoBehaviour
         if (collision.gameObject.CompareTag("CollectionPosition"))
         {
             MedalCollection();
-            Debug.Log("メダルが地面に衝突したため、メダルを返却しました");
         }
     }
 
