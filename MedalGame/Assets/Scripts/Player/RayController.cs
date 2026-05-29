@@ -1,30 +1,30 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 /// <summary>
-/// Ray§ŒäƒNƒ‰ƒX
+/// Rayåˆ¶å¾¡ã‚¯ãƒ©ã‚¹
 /// </summary>
 public class RayController : MonoBehaviour
 {
-    // Ray‚Ì’·‚³
-    private const float RAY_LENGTH = 50.0f;
+    // Rayã®é•·ã•
+    private const float RAY_LENGTH = 100.0f;
 
-    [Header("“–‚½‚Á‚Ä‚Ù‚µ‚¢ƒŒƒCƒ„[")]
+    [Header("å½“ãŸã£ã¦ã»ã—ã„ãƒ¬ã‚¤ãƒ¤ãƒ¼")]
     [SerializeField] private LayerMask dropAreaLayer = default;
 
-    // Ray‚ª“–‚½‚Á‚½î•ñ‚ğ•Û
+    // RayãŒå½“ãŸã£ãŸæƒ…å ±ã‚’ä¿æŒ
     private RaycastHit hit = default;
 
-    // Ray‚ª“–‚½‚Á‚½‚©‚Ç‚¤‚©‚ğ‚Ù‚©ƒNƒ‰ƒX‚É’m‚ç‚¹‚é‚½‚ß‚Ìƒtƒ‰ƒO
+    // RayãŒå½“ãŸã£ãŸã‹ã©ã†ã‹ã‚’ã»ã‹ã‚¯ãƒ©ã‚¹ã«çŸ¥ã‚‰ã›ã‚‹ãŸã‚ã®ãƒ•ãƒ©ã‚°
     public bool isHit { get; private set; } = false;
 
     /// <summary>
-    /// Ray‚ğ”ò‚Î‚·ˆ—
+    /// Rayã‚’é£›ã°ã™å‡¦ç†
     /// </summary>
     public void RayLaunch(Vector2 rayPosition, Camera launchCamera)
     {
         Ray ray = launchCamera.ScreenPointToRay(rayPosition);
 
-        // Ray‚ª“–‚½‚Á‚½ƒIƒuƒWƒFƒNƒg‚Ìî•ñ‚ğŠi”[
+        // RayãŒå½“ãŸã£ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æƒ…å ±ã‚’æ ¼ç´
         if (Physics.Raycast(ray, out hit, RAY_LENGTH, dropAreaLayer))
         {
             isHit = true;
@@ -33,13 +33,11 @@ public class RayController : MonoBehaviour
         {
             isHit = false;
         }
-
-        Debug.DrawRay(ray.origin, ray.direction * 50, Color.red);
     }
 
 
     /// <summary>
-    /// Ray‚ª“–‚½‚Á‚½À•W‚ğ•Ô‚·
+    /// RayãŒå½“ãŸã£ãŸåº§æ¨™ã‚’è¿”ã™
     /// </summary>
     public Vector3 GetHitPoint()
     {
