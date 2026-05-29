@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     [Header("Rayを飛ばすクラス参照用")]
     [SerializeField] private RayController rayController = null;
 
-
     [Header("Rayを飛ばすときに使用するカメラ")]
     [SerializeField] private Camera launchCamera = null;
 
