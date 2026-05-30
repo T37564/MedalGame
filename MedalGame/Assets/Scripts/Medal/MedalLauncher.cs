@@ -1,9 +1,15 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// メダルを発射するクラス
+/// </summary>
 public class MedalLauncher : MonoBehaviour
 {
     [Header("メダルプール管理クラス")]
     [SerializeField] private MedalPoolManager medalPoolManager = null;
+
+    [Header("メダル枚数管理クラス")]
+    [SerializeField] private MedalManager medalManager = null;
 
     [Header("メダルを発射する位置")]
     [SerializeField] private Transform launcherPoint = null;
@@ -13,6 +19,9 @@ public class MedalLauncher : MonoBehaviour
     /// </summary>
     public void LaunchMedal(Vector3 dropPoint)
     {
+        // メダルの枚数が0以下の場合は発射しない
+        if (medalManager.CurrentMedalCount <= 0) return;
+
         // メダルを取り出す
         GameObject rentedMedal = medalPoolManager.GetMedal();
 
@@ -24,11 +33,11 @@ public class MedalLauncher : MonoBehaviour
 
 
         // メダルを落下地点に向けて発射する処理
-        // 落下地点までの距離を計算
+        // 発射方向と距離を計算
         Vector3 direction = dropPoint - launcherPoint.position;
-
         medalRigidbody.linearVelocity = direction * 0.5f;
 
-        medalRigidbody.AddForce(direction * Time.deltaTime, ForceMode.Impulse);
+        // メダルの枚数を減算する
+        medalManager.RemoveMedal();
     }
 }
