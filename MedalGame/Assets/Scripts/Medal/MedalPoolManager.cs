@@ -15,6 +15,9 @@ public class MedalPoolManager : MonoBehaviour
     [Header("複製するメダル")]
     [SerializeField] private GameObject medalPrefab = null;
 
+    [Header("複製したメダルを入れる親オブジェクト")]
+    [SerializeField] private Transform medalContainer = null;
+
     // Unity公式オブジェクトプール
     private ObjectPool<GameObject> medalPool = null;
 
@@ -47,7 +50,7 @@ public class MedalPoolManager : MonoBehaviour
     /// </summary>
     private GameObject CreateMedal()
     {
-        return Instantiate(medalPrefab);
+        return Instantiate(medalPrefab, medalContainer);
     }
 
     /// <summary>

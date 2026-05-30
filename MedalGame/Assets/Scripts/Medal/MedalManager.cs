@@ -5,16 +5,19 @@
 /// </summary>
 public class MedalManager : MonoBehaviour
 {
-    // 現在のメダルの枚数を保持するプロパティ
-    public int CurrentMedalCount { get; private set; } = 0;
+    // メダルの初期枚数
+    private const int INITIAL_MEDAL_COUNT = 100;
 
     [Header("ゲームUIコントローラー 参照用")]
     [SerializeField] private GameUIController gameUIController = null;
 
+    // 現在のメダルの枚数を保持するプロパティ
+    public int CurrentMedalCount { get; private set; } = 0;
+
+
     private void Start()
     {
-        // ゲーム開始時にメダルの枚数をリセット
-        ResetMedal();
+        CurrentMedalCount = INITIAL_MEDAL_COUNT;
     }
 
     /// <summary>
