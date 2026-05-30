@@ -11,6 +11,8 @@ public class RayController : MonoBehaviour
     [Header("当たってほしいレイヤー")]
     [SerializeField] private LayerMask dropAreaLayer = default;
 
+
+
     // Rayが当たった情報を保持
     private RaycastHit hit = default;
 
@@ -20,9 +22,9 @@ public class RayController : MonoBehaviour
     /// <summary>
     /// Rayを飛ばす処理
     /// </summary>
-    public void RayLaunch(Vector2 rayPosition, Camera launchCamera)
+    public void RayLaunch(Camera launchCamera, Vector2 localPoint)
     {
-        Ray ray = launchCamera.ScreenPointToRay(rayPosition);
+        Ray ray = launchCamera.ViewportPointToRay(new Vector3(localPoint.x, localPoint.y, 0));
 
         // Rayが当たったオブジェクトの情報を格納
         if (Physics.Raycast(ray, out hit, RAY_LENGTH, dropAreaLayer))
