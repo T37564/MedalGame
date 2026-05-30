@@ -1,4 +1,5 @@
 ﻿using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -9,11 +10,26 @@ public class GameUIController : MonoBehaviour
     [Header("メダル枚数表示用テキスト")]
     [SerializeField] private TMP_Text medalCount = null;
 
+    [Header("ゲーム中のUI")]
+    [SerializeField] private GameObject gameUI = null;
+
+    [Header("LaunchCameraUI")]
+    [SerializeField] private GameObject launchCameraUI = null;
+
     /// <summary>
     /// コインの枚数を表示するUIの更新
     /// </summary>
     public void UpdateMedalCountUI(int currentMedal)
     {
         medalCount.text = currentMedal.ToString();
+    }
+
+    public void ChangeGameUIState(bool isDisplay)
+    {
+        gameUI.SetActive(isDisplay);
+    }
+    public void ChangeLaunchCameraUIState(bool isDisplay)
+    {
+        launchCameraUI.SetActive(isDisplay);
     }
 }
