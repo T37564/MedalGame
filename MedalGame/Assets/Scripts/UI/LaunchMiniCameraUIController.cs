@@ -26,7 +26,11 @@ public class LaunchMiniCameraUIController : MonoBehaviour
     private float minY = 0.0f;
     private float maxY = 0.0f;
 
-    private void Start()
+
+    /// <summary>
+    /// ミニカメラの移動可能範囲を計算して初期化する処理
+    /// </summary>
+    public void InitializeMoveArea()
     {
         // 移動可能範囲の幅と高さを取得
         float areaWidth = moveArea.rect.width;
@@ -36,8 +40,8 @@ public class LaunchMiniCameraUIController : MonoBehaviour
         float miniWidth = miniCamera.rect.width;
         float miniHeight = miniCamera.rect.height;
 
-
-        // ミニカメラが移動可能範囲からはみ出さないよう制御値を計算
+        // ミニカメラの中心が移動可能範囲内に収まるように、
+        // 移動可能範囲の端からミニカメラの半分の幅と高さを引いて計算
         minX = -(areaWidth / 2f) + (miniWidth / 2f);
         maxX = (areaWidth / 2f) - (miniWidth / 2f);
 
@@ -56,12 +60,10 @@ public class LaunchMiniCameraUIController : MonoBehaviour
         // ミニカメラを移動
         miniCamera.anchoredPosition += delta;
 
-        // ミニカメラ位置を取得
         Vector2 position = miniCamera.anchoredPosition;
 
         // 移動可能範囲内へ制限
         position.x = Mathf.Clamp(position.x, minX, maxX);
-
         position.y = Mathf.Clamp(position.y, minY, maxY);
 
         // 制限後の位置を適用
@@ -74,7 +76,7 @@ public class LaunchMiniCameraUIController : MonoBehaviour
     /// <summary>
     /// 前回のタッチ位置を更新する処理
     /// </summary>
-    public void UpdatePreviousPosition(Vector2 position)
+    public void SetPreviousPosition(Vector2 position)
     {
         previousPosition = position;
     }

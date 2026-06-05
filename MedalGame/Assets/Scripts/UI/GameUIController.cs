@@ -23,10 +23,17 @@ public class GameUIController : MonoBehaviour
         medalCount.text = currentMedal.ToString();
     }
 
+    /// <summary>
+    /// ゲーム中のUIの表示状態を変更する
+    /// </summary>
     public void ChangeGameUIState(bool isDisplay)
     {
         gameUI.SetActive(isDisplay);
     }
+
+    /// <summary>
+    /// ミニカメラのUIの表示状態を変更する
+    /// </summary>
     public void ChangeLaunchCameraUIState(bool isDisplay)
     {
         launchCameraUI.SetActive(isDisplay);
