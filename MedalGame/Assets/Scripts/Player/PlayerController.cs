@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
                     isDragging = true;
 
                     // ドラッグ開始位置を保存
-                    launchMiniCameraUIController.UpdatePreviousPosition(touchPosition);
+                    launchMiniCameraUIController.SetPreviousPosition(touchPosition);
                     return;
                 }
             }
@@ -99,6 +99,11 @@ public class PlayerController : MonoBehaviour
             gameUIController.ChangeGameUIState(true);
             gameUIController.ChangeLaunchCameraUIState(true);
 
+            // UIのレイアウトを更新する
+            Canvas.ForceUpdateCanvases();
+
+            // ミニカメラの移動可能範囲を初期化
+            launchMiniCameraUIController.InitializeMoveArea();
         }
 
         if (titleManager.IsTitle) return;
@@ -106,10 +111,8 @@ public class PlayerController : MonoBehaviour
         // タップしている間の処理
         if (inputActions.Player.Press.IsPressed())
         {
-            // タップ位置を取得
             Vector2 touchPosition = inputActions.Player.Position.ReadValue<Vector2>();
 
-            // ドラッグ中はミニカメラを移動
             if (isDragging)
             {
                 launchMiniCameraUIController.SlideCamera(touchPosition);
@@ -117,8 +120,6 @@ public class PlayerController : MonoBehaviour
                 return;
             }
 
-
-            // タップ位置を保持する変数
             Vector2 localPoint = Vector2.zero;
 
             // タップ位置をminiCameraUIのローカル座標に変換
@@ -131,9 +132,11 @@ public class PlayerController : MonoBehaviour
             localPoint.x = (localPoint.x - rect.x) / rect.width;
             localPoint.y = (localPoint.y - rect.y) / rect.height;
 
-            // タップ位置が有効かどうかを確認
-            if (0.0f <= localPoint.x && localPoint.x <= 1.0f &&
-                0.0f <= localPoint.y && localPoint.y <= 1.0f)
+            // タップ位置がminiCameraUIの範囲内かどうかを確認
+            bool isInsideMiniCamera = 0.0f <= localPoint.x && localPoint.x <= 1.0f &&
+                                     0.0f <= localPoint.y && localPoint.y <= 1.0f;
+
+            if (isInsideMiniCamera)
             {
                 // Rayを飛ばすメソッド実行
                 rayController.RayLaunch(launchCamera, localPoint);
@@ -142,8 +145,7 @@ public class PlayerController : MonoBehaviour
                 isAimValid = true;
 
             }
-            // タップ位置が無効
-            else
+            else // タップ位置が無効
             {
                 isAimValid = false;
             }
