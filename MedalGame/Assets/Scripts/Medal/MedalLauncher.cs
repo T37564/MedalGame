@@ -5,6 +5,11 @@
 /// </summary>
 public class MedalLauncher : MonoBehaviour
 {
+    // メダルの発射速度
+    private const float LAUNCH_SPEED = 0.5f;
+
+
+
     [Header("メダルプール管理クラス")]
     [SerializeField] private MedalPoolManager medalPoolManager = null;
 
@@ -35,7 +40,7 @@ public class MedalLauncher : MonoBehaviour
         // メダルを落下地点に向けて発射する処理
         // 発射方向と距離を計算
         Vector3 direction = dropPoint - launcherPoint.position;
-        medalRigidbody.linearVelocity = direction * 0.5f;
+        medalRigidbody.linearVelocity = direction * LAUNCH_SPEED;
 
         // メダルの枚数を減算する
         medalManager.RemoveMedal();

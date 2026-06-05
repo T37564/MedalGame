@@ -8,21 +8,42 @@ public class LaunchMiniCameraUIController : MonoBehaviour
     [Header("ミニカメラ")]
     [SerializeField] private RectTransform miniCamera = null;
 
+    [Header("移動可能範囲")]
+    [SerializeField] private RectTransform moveArea = null;
+
     [Header("ドラッグできる範囲のフレーム一覧")]
     [SerializeField] private RectTransform[] dragFrames = null;
 
     // 前回のタッチ位置を保持
     private Vector2 previousPosition = Vector2.zero;
 
-    [Header("ドラッグできる範囲")]
-    [SerializeField] private float minX = 0; // ドラッグできる最小X座標
-    [SerializeField] private float maxX = 0;  // ドラッグできる最大X座標
-    [SerializeField] private float minY = 0; // ドラッグできる最小Y座標
-    [SerializeField] private float maxY = 0;  // ドラッグできる最大Y座標
-
     // ドラッグ判定に使用するフレーム一覧
     public RectTransform[] MiniCameraDragFrames => dragFrames;
 
+    // ドラッグ可能範囲
+    private float minX = 0.0f;
+    private float maxX = 0.0f;
+    private float minY = 0.0f;
+    private float maxY = 0.0f;
+
+    private void Start()
+    {
+        // 移動可能範囲の幅と高さを取得
+        float areaWidth = moveArea.rect.width;
+        float areaHeight = moveArea.rect.height;
+
+        // ミニカメラの幅と高さを取得
+        float miniWidth = miniCamera.rect.width;
+        float miniHeight = miniCamera.rect.height;
+
+
+        // ミニカメラが移動可能範囲からはみ出さないよう制御値を計算
+        minX = -(areaWidth / 2f) + (miniWidth / 2f);
+        maxX = (areaWidth / 2f) - (miniWidth / 2f);
+
+        minY = -(areaHeight / 2f) + (miniHeight / 2f);
+        maxY = (areaHeight / 2f) - (miniHeight / 2f);
+    }
 
     /// <summary>
     /// ミニカメラを移動させる処理
@@ -32,20 +53,21 @@ public class LaunchMiniCameraUIController : MonoBehaviour
         // ドラッグ開始位置と現在のタッチ位置の差分を計算
         Vector2 delta = touchPosition - previousPosition;
 
-        // ミニカメラのルートを移動
+        // ミニカメラを移動
         miniCamera.anchoredPosition += delta;
 
-        // ミニカメラの位置をドラッグできる範囲内に制限
+        // ミニカメラ位置を取得
         Vector2 position = miniCamera.anchoredPosition;
 
-        // ドラッグできる範囲内に位置を制限
+        // 移動可能範囲内へ制限
         position.x = Mathf.Clamp(position.x, minX, maxX);
+
         position.y = Mathf.Clamp(position.y, minY, maxY);
 
-        // 制限された位置をミニカメラに適用
+        // 制限後の位置を適用
         miniCamera.anchoredPosition = position;
 
-        // 現在のタッチ位置を次のフレームのドラッグ開始位置として保存
+        // 現在位置を保存
         previousPosition = touchPosition;
     }
 
