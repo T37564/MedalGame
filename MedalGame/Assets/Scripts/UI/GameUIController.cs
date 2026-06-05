@@ -9,11 +9,29 @@ public class GameUIController : MonoBehaviour
     [Header("メダル枚数表示用テキスト")]
     [SerializeField] private TMP_Text medalCount = null;
 
+    [Header("現在のメダル枚数表示用テキスト")]
+    [SerializeField] private TMP_Text activeMedalCount = null;
+    [Header("現在の未使用メダル枚数表示用テキスト")]
+    [SerializeField] private TMP_Text inactiveMedalCount = null;
+    [Header("メダルの総数を表示するテキスト")]
+    [SerializeField] private TMP_Text totalMedalCount = null;
+
     [Header("ゲーム中のUI")]
     [SerializeField] private GameObject gameUI = null;
 
     [Header("LaunchCameraUI")]
     [SerializeField] private GameObject launchCameraUI = null;
+
+    [Header("メダルプールマネージャー")]
+    [SerializeField] private MedalPoolManager medalPoolManager = null;
+
+
+    private void Update()
+    {
+        activeMedalCount.text = medalPoolManager.ActiveMedalCount.ToString();
+        inactiveMedalCount.text = medalPoolManager.InactiveMedalCount.ToString();
+        totalMedalCount.text = medalPoolManager.TotalMedalCount.ToString();
+    }
 
     /// <summary>
     /// コインの枚数を表示するUIの更新
@@ -22,6 +40,8 @@ public class GameUIController : MonoBehaviour
     {
         medalCount.text = currentMedal.ToString();
     }
+
+
 
     /// <summary>
     /// ゲーム中のUIの表示状態を変更する

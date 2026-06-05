@@ -12,6 +12,8 @@ public class MedalPoolManager : MonoBehaviour
     // メダルの最大数
     private const int MAX_POOL_SIZE = 200;
 
+
+
     [Header("複製するメダル")]
     [SerializeField] private GameObject medalPrefab = null;
 
@@ -20,6 +22,19 @@ public class MedalPoolManager : MonoBehaviour
 
     // Unity公式オブジェクトプール
     private ObjectPool<GameObject> medalPool = null;
+
+
+
+    // 使用中のメダル数を取得するプロパティ
+    public int ActiveMedalCount => medalPool.CountActive;
+
+    // 未使用のメダル数を取得するプロパティ
+    public int InactiveMedalCount => medalPool.CountInactive;
+
+    // プール全体のメダル数を取得するプロパティ
+    public int TotalMedalCount => medalPool.CountAll;
+
+
 
     /// <summary>
     /// オブジェクトプールの初期化
