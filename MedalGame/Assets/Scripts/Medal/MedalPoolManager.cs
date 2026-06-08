@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Pool;
 
 /// <summary>
@@ -7,10 +8,10 @@ using UnityEngine.Pool;
 public class MedalPoolManager : MonoBehaviour
 {
     // メダルの初期数
-    private const int DEFAULT_POOL_SIZE = 100;
+    private const int DEFAULT_POOL_SIZE = 200;
 
     // メダルの最大数
-    private const int MAX_POOL_SIZE = 200;
+    private const int MAX_POOL_SIZE = 300;
 
 
 
@@ -51,10 +52,19 @@ public class MedalPoolManager : MonoBehaviour
            MAX_POOL_SIZE        // 最大数
          );
 
-        // 事前生成
+        // ObjectPoolはGet→Releaseを繰り返しても1個しか生成されないため、
+        // 一度すべて取得してからまとめて返却し、初期数分のメダルを事前生成する
+        List<GameObject> temp = new();
+
+        //　初期数分のメダルを生成
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++)
         {
-            GameObject medal = medalPool.Get();
+            temp.Add(medalPool.Get());
+        }
+
+        // 生成したメダルをプールへ戻す
+        foreach (GameObject medal in temp)
+        {
             medalPool.Release(medal);
         }
     }
