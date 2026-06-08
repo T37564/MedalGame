@@ -82,6 +82,7 @@ public class MedalPoolManager : MonoBehaviour
     /// </summary>
     private void OnReturnMedal(GameObject medal)
     {
+        Debug.Log($"POOL RETURN {medal.GetInstanceID()}");
         medal.SetActive(false);
     }
 

@@ -1,42 +1,42 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 /// <summary>
-/// ƒvƒbƒVƒƒ[‚ğ“Á’èˆÊ’u‚Ö‰•œˆÚ“®‚³‚¹‚éˆ—
+/// ãƒ—ãƒƒã‚·ãƒ£ãƒ¼ã‚’ç‰¹å®šä½ç½®ã¸å¾€å¾©ç§»å‹•ã•ã›ã‚‹å‡¦ç†
 /// </summary>
 public class PusherController : MonoBehaviour
 {
-    // ƒvƒbƒVƒƒ[‚Ì‘¬“x
-    private const float FORWARD_SPEED = 3.0f;
-    private const float BACK_SPEED = 5.0f;
+    // ãƒ—ãƒƒã‚·ãƒ£ãƒ¼ã®é€Ÿåº¦
+    private const float FORWARD_SPEED = 0.5f;
+    private const float BACK_SPEED = 1.0f;
 
-    // “’…”»’è·
+    // åˆ°ç€åˆ¤å®šå·®
     private const float ARRIVAL_JUDGMENT_DIFFERENCE = 0.01f;
 
 
 
-    [Header("ƒvƒbƒVƒƒ[–{‘Ì")]
+    [Header("ãƒ—ãƒƒã‚·ãƒ£ãƒ¼æœ¬ä½“")]
     [SerializeField] private Transform upperSection = null;
 
-    [Header("ƒvƒbƒVƒƒ[Rigidbody")]
+    [Header("ãƒ—ãƒƒã‚·ãƒ£ãƒ¼Rigidbody")]
     [SerializeField] private Rigidbody upperSectionRigidbody = null;
 
-    [Header("ƒvƒbƒVƒƒ[ŠJnˆÊ’u")]
+    [Header("ãƒ—ãƒƒã‚·ãƒ£ãƒ¼é–‹å§‹ä½ç½®")]
     [SerializeField] private Transform startPoint = null;
 
-    [Header("ƒvƒbƒVƒƒ[I—¹ˆÊ’u")]
+    [Header("ãƒ—ãƒƒã‚·ãƒ£ãƒ¼çµ‚äº†ä½ç½®")]
     [SerializeField] private Transform endPoint = null;
 
 
 
-    // Œ»İŒü‚©‚Á‚Ä‚¢‚é–Ú“I’n
+    // ç¾åœ¨å‘ã‹ã£ã¦ã„ã‚‹ç›®çš„åœ°
     private Transform currentTarget = null;
 
-    //@Œ»İ‚Ì‘¬“x
+    //ã€€ç¾åœ¨ã®é€Ÿåº¦
     private float currentSpeed = 0.0f;
 
 
     /// <summary>
-    /// ƒvƒbƒVƒƒ[‚ğˆÚ“®‚³‚¹‚é‚½‚ß‚Ì–Ú“I’nA‘¬“x‚ğ“ü‚ê‚é
+    /// ãƒ—ãƒƒã‚·ãƒ£ãƒ¼ã‚’ç§»å‹•ã•ã›ã‚‹ãŸã‚ã®ç›®çš„åœ°ã€é€Ÿåº¦ã‚’å…¥ã‚Œã‚‹
     /// </summary>
     private void Start()
     {
@@ -46,34 +46,34 @@ public class PusherController : MonoBehaviour
 
 
     /// <summary>
-    /// ƒvƒbƒVƒƒ[‚ğ‰•œˆÚ“®‚³‚¹‚é
+    /// ãƒ—ãƒƒã‚·ãƒ£ãƒ¼ã‚’å¾€å¾©ç§»å‹•ã•ã›ã‚‹
     /// </summary>
     private void FixedUpdate()
     {
         PusherMovement(currentTarget);
 
-        // Œ»İˆÊ’u‚Æ–Ú“I’n‚Ì‹——£‚ğ‘ª’è
-        // Distance(ˆÊ’uA, ˆÊ’uB)
+        // ç¾åœ¨ä½ç½®ã¨ç›®çš„åœ°ã®è·é›¢ã‚’æ¸¬å®š
+        // Distance(ä½ç½®A, ä½ç½®B)
         if (Vector3.Distance(
             upperSection.position,
             currentTarget.position) < ARRIVAL_JUDGMENT_DIFFERENCE)
         {
-            // s‚«æØ‚è‘Ö‚¦
+            // è¡Œãå…ˆåˆ‡ã‚Šæ›¿ãˆ
             currentTarget = currentTarget == endPoint ? startPoint : endPoint;
 
-            // ‘¬“xØ‚è‘Ö‚¦
+            // é€Ÿåº¦åˆ‡ã‚Šæ›¿ãˆ
             currentSpeed = currentTarget == endPoint ? FORWARD_SPEED : BACK_SPEED;
         }
     }
 
 
     /// <summary>
-    /// “Á’è‚Ìƒ|ƒWƒVƒ‡ƒ“‚ÉƒvƒbƒVƒƒ[‚ğˆÚ“®‚³‚¹‚éˆ—
+    /// ç‰¹å®šã®ãƒã‚¸ã‚·ãƒ§ãƒ³ã«ãƒ—ãƒƒã‚·ãƒ£ãƒ¼ã‚’ç§»å‹•ã•ã›ã‚‹å‡¦ç†
     /// </summary>
     private void PusherMovement(Transform movePoint)
     {
-        // ˆê’è‘¬“x‚ÅˆÚ“®‚³‚¹‚é‚½‚ßMoveTowards‚ğg—p
-        // MoveTowards(Œ»İˆÊ’u, –Ú“I’n, ˆÚ“®—Ê);
+        // ä¸€å®šé€Ÿåº¦ã§ç§»å‹•ã•ã›ã‚‹ãŸã‚MoveTowardsã‚’ä½¿ç”¨
+        // MoveTowards(ç¾åœ¨ä½ç½®, ç›®çš„åœ°, ç§»å‹•é‡);
         Vector3 nextPosition =
             Vector3.MoveTowards(
                 upperSectionRigidbody.position,
@@ -81,7 +81,7 @@ public class PusherController : MonoBehaviour
                 currentSpeed * Time.fixedDeltaTime
                 );
 
-        // Rigidbody‘¤‚ÌˆÊ’u‚ğ•ÏX‚·‚é
+        // Rigidbodyå´ã®ä½ç½®ã‚’å¤‰æ›´ã™ã‚‹
         upperSectionRigidbody.MovePosition(nextPosition);
     }
 }

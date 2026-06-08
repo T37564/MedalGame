@@ -25,7 +25,7 @@ public class GetHoleController : MonoBehaviour
             if (medalController == null) return;
 
             // メダルを回収する
-            medalController.MedalCollection();
+            medalController.MedalCollection("GetHole");
         }
     }
 }
