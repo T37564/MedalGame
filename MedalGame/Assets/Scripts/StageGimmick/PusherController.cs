@@ -6,8 +6,8 @@
 public class PusherController : MonoBehaviour
 {
     // プッシャーの速度
-    private const float FORWARD_SPEED = 0.5f;
-    private const float BACK_SPEED = 1.0f;
+    private const float FORWARD_SPEED = 2.0f;
+    private const float BACK_SPEED = 3.0f;
 
     // 到着判定差
     private const float ARRIVAL_JUDGMENT_DIFFERENCE = 0.01f;
