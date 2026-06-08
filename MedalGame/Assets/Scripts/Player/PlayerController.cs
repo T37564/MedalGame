@@ -164,7 +164,6 @@ public class PlayerController : MonoBehaviour
 
             // 特定の座標にコインを飛ばす
             medalLauncher.LaunchMedal(rayController.GetHitPoint());
-
         }
     }
 }

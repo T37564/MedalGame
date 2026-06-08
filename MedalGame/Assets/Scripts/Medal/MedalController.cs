@@ -32,19 +32,12 @@ public class MedalController : MonoBehaviour
         }
     }
 
-
+  
     /// <summary>
     /// 回転が残らないようにrigidbodyをリセットする処理    
     /// </summary>
     public void MedalCollection(string reason)
     {
-        Debug.Log($"回収理由:{reason}");
-        Debug.Log($"回収座標:{transform.position}");
-
-        MedalRigidbody.linearVelocity = Vector3.zero;
-        MedalRigidbody.angularVelocity = Vector3.zero;
-
         medalPoolManager.ReturnMedal(gameObject);
     }
-
 }
