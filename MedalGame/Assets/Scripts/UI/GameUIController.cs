@@ -26,7 +26,6 @@ public class GameUIController : MonoBehaviour
     [SerializeField] private MedalPoolManager medalPoolManager = null;
 
     /// <summary>
-    /// 
     /// 現在のメダル枚数、未使用のメダル枚数、総メダル枚数を表示するUIの更新
     /// </summary>
     private void Update()
@@ -36,10 +35,6 @@ public class GameUIController : MonoBehaviour
         totalMedalCount.text = $"Total:{medalPoolManager.TotalMedalCount}";
     }
 
-    private void Start()
-    {
-        Time.timeScale = 0.1f;
-    }
 
     /// <summary>
     /// コインの枚数を表示するUIの更新
