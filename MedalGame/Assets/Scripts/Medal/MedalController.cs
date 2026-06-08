@@ -28,7 +28,7 @@ public class MedalController : MonoBehaviour
         // メダルが地面に衝突したとき、メダルを返却する
         if (collision.gameObject.CompareTag("CollectionPosition"))
         {
-            MedalCollection();
+            MedalCollection("CollectionPosition");
         }
     }
 
@@ -36,9 +36,11 @@ public class MedalController : MonoBehaviour
     /// <summary>
     /// 回転が残らないようにrigidbodyをリセットする処理    
     /// </summary>
-    public void MedalCollection()
+    public void MedalCollection(string reason)
     {
-        // Rigidbodyの速度をリセットする
+        Debug.Log($"回収理由:{reason}");
+        Debug.Log($"回収座標:{transform.position}");
+
         MedalRigidbody.linearVelocity = Vector3.zero;
         MedalRigidbody.angularVelocity = Vector3.zero;
 
