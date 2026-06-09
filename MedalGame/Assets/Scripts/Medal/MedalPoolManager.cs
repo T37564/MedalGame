@@ -29,13 +29,6 @@ public class MedalPoolManager : MonoBehaviour
     // 使用中のメダル数を取得するプロパティ
     public int ActiveMedalCount => medalPool.CountActive;
 
-    // 未使用のメダル数を取得するプロパティ
-    public int InactiveMedalCount => medalPool.CountInactive;
-
-    // プール全体のメダル数を取得するプロパティ
-    public int TotalMedalCount => medalPool.CountAll;
-
-
 
     /// <summary>
     /// オブジェクトプールの初期化
