@@ -5,11 +5,9 @@
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
-    [Header("タイトルのUI管理クラス参照用")]
-    [SerializeField] private TitleManager titleManager = null;
+    [Header("UI管理クラス参照用")]
+    [SerializeField] private UIManager uiManager = null;
 
-    [Header("ゲーム中のUI管理クラス参照用")]
-    [SerializeField] private GameUIController gameUIController = null;
 
     [Header("メダル発射クラス参照用")]
     [SerializeField] private MedalLauncher medalLauncher = null;
@@ -90,14 +88,10 @@ public class PlayerController : MonoBehaviour
             }
 
             // タイトル画面中でなければ処理しない
-            if (!titleManager.IsTitle) return;
+            if (!uiManager.IsTitle) return;
 
-            // タイトルUIを非表示にする
-            titleManager.ChangeTitleState(false);
-
-            // ゲーム中のUIを表示する
-            gameUIController.ChangeGameUIState(true);
-            gameUIController.ChangeLaunchCameraUIState(true);
+            // ゲーム開始のUI遷移を開始する
+            uiManager.StartGame();
 
             // UIのレイアウトを更新する
             Canvas.ForceUpdateCanvases();
@@ -106,7 +100,7 @@ public class PlayerController : MonoBehaviour
             launchMiniCameraUIController.InitializeMoveArea();
         }
 
-        if (titleManager.IsTitle) return;
+        if (uiManager.IsTitle) return;
 
         // タップしている間の処理
         if (inputActions.Player.Press.IsPressed())

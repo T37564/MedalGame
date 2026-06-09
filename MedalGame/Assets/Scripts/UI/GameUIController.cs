@@ -9,30 +9,24 @@ public class GameUIController : MonoBehaviour
     [Header("メダル枚数表示用テキスト")]
     [SerializeField] private TMP_Text medalCount = null;
 
-    [Header("現在のメダル枚数表示用テキスト")]
+    [Header("現在の使用メダル枚数表示用テキスト")]
     [SerializeField] private TMP_Text activeMedalCount = null;
-    [Header("現在の未使用メダル枚数表示用テキスト")]
-    [SerializeField] private TMP_Text inactiveMedalCount = null;
-    [Header("メダルの総数を表示するテキスト")]
-    [SerializeField] private TMP_Text totalMedalCount = null;
 
     [Header("ゲーム中のUI")]
-    [SerializeField] private GameObject gameUI = null;
+    [SerializeField] private Canvas gameCanvas = null;
 
     [Header("LaunchCameraUI")]
-    [SerializeField] private GameObject launchCameraUI = null;
+    [SerializeField] private Canvas launchCameraUI = null;
 
     [Header("メダルプールマネージャー")]
     [SerializeField] private MedalPoolManager medalPoolManager = null;
 
     /// <summary>
-    /// 現在のメダル枚数、未使用のメダル枚数、総メダル枚数を表示するUIの更新
+    /// 現在の使用メダル枚数を表示するUIの更新
     /// </summary>
     private void Update()
     {
         activeMedalCount.text = $"Active:{medalPoolManager.ActiveMedalCount}";
-        inactiveMedalCount.text = $"Inactive:{medalPoolManager.InactiveMedalCount}";
-        totalMedalCount.text = $"Total:{medalPoolManager.TotalMedalCount}";
     }
 
 
@@ -51,7 +45,7 @@ public class GameUIController : MonoBehaviour
     /// </summary>
     public void ChangeGameUIState(bool isDisplay)
     {
-        gameUI.SetActive(isDisplay);
+        gameCanvas.gameObject.SetActive(isDisplay);
     }
 
     /// <summary>
@@ -59,6 +53,6 @@ public class GameUIController : MonoBehaviour
     /// </summary>
     public void ChangeLaunchCameraUIState(bool isDisplay)
     {
-        launchCameraUI.SetActive(isDisplay);
+        launchCameraUI.gameObject.SetActive(isDisplay);
     }
 }

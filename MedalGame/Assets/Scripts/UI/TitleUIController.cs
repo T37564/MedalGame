@@ -3,7 +3,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 
 /// <summary>
-/// タイトルのUIのアニメーションや表示非表示を管理するクラス
+/// タイトルUIを管理するクラス
 /// </summary>
 public class TitleUIController : MonoBehaviour
 {
@@ -20,7 +20,21 @@ public class TitleUIController : MonoBehaviour
     [SerializeField] private Image titleTextImage = null;
 
     /// <summary>
-    /// 文字をフェードイン、アウトさせるアニメーションを開始する
+    /// タイトル画面かどうか
+    /// </summary>
+    public bool IsTitle { get; private set; }
+
+    /// <summary>
+    /// タイトルUIの初期化
+    /// </summary>
+    private void Awake()
+    {
+        ChangeTitleUIState(true);
+    }
+
+
+    /// <summary>
+    ///  「TAP TO START」画像のフェードアニメーションを開始する
     /// </summary>
     private void Start()
     {
@@ -28,11 +42,25 @@ public class TitleUIController : MonoBehaviour
         titleTextImage.DOFade(FADE_ALPHA, FADE_DURATION).SetLoops(-1, LoopType.Yoyo);
     }
 
+
     /// <summary>
-    /// タイトルのキャンバスの表示非表示処理
+    /// タイトルUIのアニメーションを停止する
     /// </summary>
-    public void SetTitleCanvasActive()
+    private void OnDisable()
     {
-        titleCanvas.gameObject.SetActive(!titleCanvas.gameObject.activeSelf);
+        titleTextImage.DOKill();
+    }
+
+
+    /// <summary>
+    /// タイトルUIの表示を切り替える
+    /// </summary>
+    public void ChangeTitleUIState(bool isDisplay)
+    {
+        // タイトル画面の状態を更新
+        IsTitle = isDisplay;
+
+        // タイトルUIの表示状態を切り替える
+        titleCanvas.gameObject.SetActive(isDisplay);
     }
 }

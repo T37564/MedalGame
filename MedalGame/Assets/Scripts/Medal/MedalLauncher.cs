@@ -24,9 +24,6 @@ public class MedalLauncher : MonoBehaviour
     /// </summary>
     public void LaunchMedal(Vector3 dropPoint)
     {
-        // メダルの枚数が0以下の場合は発射しない
-        if (medalManager.CurrentMedalCount <= 0) return;
-
         // メダルを取り出す
         GameObject rentedMedal = medalPoolManager.GetMedal();
 
@@ -53,8 +50,5 @@ public class MedalLauncher : MonoBehaviour
 
         // 発射方向に力を加える
         medalRigidbody.linearVelocity = direction;
-
-        // メダルの枚数を減算する
-        medalManager.RemoveMedal();
     }
 }
