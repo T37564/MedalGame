@@ -15,8 +15,15 @@ public class UIManager : MonoBehaviour
     [Header("NowLoadingのUI管理クラス参照用")]
     [SerializeField] private NowLoadingUIController nowLoadingUIController = null;
 
+    [Header("ゲームオーバーUI管理クラス参照用")]
+    [SerializeField] private GameOverUIController gameOverUIController = null;
+
     [Header("ギミック壁クラス参照用")]
     [SerializeField] private GuardRotator[] guardRotator = null;
+
+    [Header("ミニカメラを移動させるクラス参照")]
+    [SerializeField] private LaunchMiniCameraUIController launchMiniCameraUIController = null;
+
 
 
     // タイトル画面中かどうかを取得するプロパティ
@@ -45,9 +52,15 @@ public class UIManager : MonoBehaviour
 
         nowLoadingUIController.ChangeNowLoadingUIState(false);
 
+        // ゲーム中のUIを表示する
         gameUIController.ChangeGameUIState(true);
-
         gameUIController.ChangeLaunchCameraUIState(true);
+
+        // UIのレイアウトを更新する
+        Canvas.ForceUpdateCanvases();
+
+        // ミニカメラの移動可能範囲を初期化
+        launchMiniCameraUIController.InitializeMoveArea();
     }
 
     /// <summary>
@@ -64,5 +77,19 @@ public class UIManager : MonoBehaviour
         }
 
         return true;
+    }
+
+
+    /// <summary>
+    /// ゲーム画面からゲームオーバー画面に遷移する処理
+    /// </summary>
+    public void ShowGameOverUI()
+    {
+        // ゲーム中UIを非表示にする
+        gameUIController.ChangeGameUIState(false);
+        gameUIController.ChangeLaunchCameraUIState(false);
+
+        // ゲームオーバーUIを表示する
+        gameOverUIController.ChangeGameOverUIState(true);
     }
 }

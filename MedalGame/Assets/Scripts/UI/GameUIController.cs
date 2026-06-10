@@ -26,7 +26,7 @@ public class GameUIController : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        activeMedalCount.text = $"Active:{medalPoolManager.ActiveMedalCount}";
+        activeMedalCount.text = $"ActiveMedal:{medalPoolManager.ActiveMedalCount}";
     }
 
 
