@@ -92,12 +92,6 @@ public class PlayerController : MonoBehaviour
 
             // ゲーム開始のUI遷移を開始する
             uiManager.StartGame();
-
-            // UIのレイアウトを更新する
-            Canvas.ForceUpdateCanvases();
-
-            // ミニカメラの移動可能範囲を初期化
-            launchMiniCameraUIController.InitializeMoveArea();
         }
 
         if (uiManager.IsTitle) return;

@@ -17,6 +17,11 @@ public class FPSManager : MonoBehaviour
     public float CurrentFps { get; private set; }
 
     /// <summary>
+    /// FPSが計算開始されたかの判定
+    /// </summary>
+    public bool IsInitialized { get; private set; }
+
+    /// <summary>
     /// FPSを計算して更新する
     /// </summary>
     private void Update()
@@ -33,6 +38,8 @@ public class FPSManager : MonoBehaviour
             CurrentFps = 1.0f / deltaTime;
 
             timer = 0.0f;
+
+            IsInitialized = true;
         }
     }
 }
