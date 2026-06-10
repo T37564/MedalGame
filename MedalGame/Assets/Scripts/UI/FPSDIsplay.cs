@@ -6,21 +6,27 @@ using UnityEngine;
 /// </summary>
 public class FPSDisplay : MonoBehaviour
 {
-    // FPS警告表示の時の値
-    private const float FPS_CAUTION = 60.0f;
+    // FPSを表示するときの先頭文字
+    private readonly string FPS_TEXT = "FPS:";
+
+    // FPS警告表示時の値
+    private readonly float FPS_CAUTION = 90.0f;
 
     // ゲームオーバー時の値
-    private const float FPS_DANGER = 30.0f;
+    private readonly float FPS_DANGER = 70.0f;
+
+    // FPS警告表示時の文字色
+    private readonly Color ORANGE = new Color(1.0f, 0.5f, 0.0f);
 
 
-    [Header("FPS表示テキスト")]
+
+    [Header("FPS表示Text")]
     [SerializeField] private TMP_Text fpsText = null;
 
     [Header("FPS管理クラス参照用")]
     [SerializeField] private FPSManager fpsManager = null;
 
-    // 文字変更時に使用するオレンジ色
-    private Color orange = new Color(1f, 0.5f, 0f);
+
 
     /// <summary>
     /// FPSの表示を更新する
@@ -34,13 +40,14 @@ public class FPSDisplay : MonoBehaviour
         }
         else if (fpsManager.CurrentFps <= FPS_CAUTION)
         {
-            fpsText.color = orange;
+            fpsText.color = ORANGE;
         }
         else
         {
             fpsText.color = Color.yellow;
         }
 
-        fpsText.text = $"FPS : {Mathf.RoundToInt(fpsManager.CurrentFps)}";
+        // 現在のFPSを表示
+        fpsText.text = $"{FPS_TEXT} {Mathf.RoundToInt(fpsManager.CurrentFps)}";
     }
 }

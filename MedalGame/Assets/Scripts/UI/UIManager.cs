@@ -1,37 +1,39 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// ƒQ[ƒ€’†‚ÌUI‘JˆÚ‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+/// UIã®è¡¨ç¤ºåˆ‡ã‚Šæ›¿ãˆã‚„ç”»é¢é·ç§»ã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 /// </summary>
-public class UIManager : MonoBehaviour
+public class UIManager : SingletonMonoBehaviour<UIManager>
 {
-    [Header("ƒ^ƒCƒgƒ‹‚ÌUIŠÇ—ƒNƒ‰ƒXQÆ—p")]
+    [Header("ã‚¿ã‚¤ãƒˆãƒ«ã®UIç®¡ç†ã‚¯ãƒ©ã‚¹å‚ç…§ç”¨")]
     [SerializeField] private TitleUIController titleUIController = null;
 
-    [Header("ƒQ[ƒ€’†‚ÌUIŠÇ—ƒNƒ‰ƒXQÆ—p")]
+    [Header("ã‚²ãƒ¼ãƒ ä¸­ã®UIç®¡ç†ã‚¯ãƒ©ã‚¹å‚ç…§ç”¨")]
     [SerializeField] private GameUIController gameUIController = null;
 
-    [Header("NowLoading‚ÌUIŠÇ—ƒNƒ‰ƒXQÆ—p")]
+    [Header("NowLoadingã®UIç®¡ç†ã‚¯ãƒ©ã‚¹å‚ç…§ç”¨")]
     [SerializeField] private NowLoadingUIController nowLoadingUIController = null;
 
-    [Header("ƒQ[ƒ€ƒI[ƒo[UIŠÇ—ƒNƒ‰ƒXQÆ—p")]
+    [Header("ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼UIç®¡ç†ã‚¯ãƒ©ã‚¹å‚ç…§ç”¨")]
     [SerializeField] private GameOverUIController gameOverUIController = null;
 
-    [Header("ƒMƒ~ƒbƒN•ÇƒNƒ‰ƒXQÆ—p")]
+    [Header("ã‚®ãƒŸãƒƒã‚¯å£ã‚¯ãƒ©ã‚¹å‚ç…§ç”¨")]
     [SerializeField] private GuardRotator[] guardRotator = null;
 
-    [Header("ƒ~ƒjƒJƒƒ‰‚ğˆÚ“®‚³‚¹‚éƒNƒ‰ƒXQÆ")]
+    [Header("ãƒŸãƒ‹ã‚«ãƒ¡ãƒ©ã‚’ç§»å‹•ã•ã›ã‚‹ã‚¯ãƒ©ã‚¹å‚ç…§")]
     [SerializeField] private LaunchMiniCameraUIController launchMiniCameraUIController = null;
 
 
 
-    // ƒ^ƒCƒgƒ‹‰æ–Ê’†‚©‚Ç‚¤‚©‚ğæ“¾‚·‚éƒvƒƒpƒeƒB
+    /// <summary>
+    /// ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ä¸­ã‹ã©ã†ã‹ã‚’å–å¾—ã™ã‚‹ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
+    /// </summary>
     public bool IsTitle => titleUIController.IsTitle;
 
 
     /// <summary>
-    /// ƒ^ƒCƒgƒ‹‰æ–Ê‚©‚çƒQ[ƒ€‰æ–Ê‚Ö‚Ì‘JˆÚ‚ğŠJn‚·‚é
+    /// ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ã‹ã‚‰ã‚²ãƒ¼ãƒ ç”»é¢ã¸ã®é·ç§»ã‚’é–‹å§‹ã™ã‚‹
     /// </summary>
     public void StartGame()
     {
@@ -39,37 +41,42 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒ^ƒCƒgƒ‹‰æ–Ê‚©‚çƒQ[ƒ€‰æ–Ê‚Ö‘JˆÚ‚·‚éƒRƒ‹[ƒ`ƒ“
+    /// ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢ã‹ã‚‰ã‚²ãƒ¼ãƒ ç”»é¢ã¸é·ç§»ã™ã‚‹ã‚³ãƒ«ãƒ¼ãƒãƒ³
     /// </summary>
     private IEnumerator StartGameRoutine()
     {
+        // ã‚¿ã‚¤ãƒˆãƒ«UIéè¡¨ç¤º
         titleUIController.ChangeTitleUIState(false);
 
+        // ãƒ­ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°UIç”»é¢è¡¨ç¤º
         nowLoadingUIController.ChangeNowLoadingUIState(true);
 
-        // ‘S‚Ä‚ÌƒK[ƒh‚ÌˆÚ“®I—¹‘Ò‚¿
+        // å…¨ã¦ã®ã‚¬ãƒ¼ãƒ‰ã®ç§»å‹•çµ‚äº†å¾…ã¡
         yield return new WaitUntil(IsAllGuardMoveEnd);
 
+        // ãƒ­ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°UIç”»é¢éè¡¨ç¤º
         nowLoadingUIController.ChangeNowLoadingUIState(false);
 
-        // ƒQ[ƒ€’†‚ÌUI‚ğ•\¦‚·‚é
+        // ã‚²ãƒ¼ãƒ ä¸­ã®UIã‚’è¡¨ç¤ºã™ã‚‹
         gameUIController.ChangeGameUIState(true);
         gameUIController.ChangeLaunchCameraUIState(true);
 
-        // UI‚ÌƒŒƒCƒAƒEƒg‚ğXV‚·‚é
+        // UIã®ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚’æ›´æ–°ã™ã‚‹
         Canvas.ForceUpdateCanvases();
 
-        // ƒ~ƒjƒJƒƒ‰‚ÌˆÚ“®‰Â”\”ÍˆÍ‚ğ‰Šú‰»
+        // ãƒŸãƒ‹ã‚«ãƒ¡ãƒ©ã®ç§»å‹•å¯èƒ½ç¯„å›²ã‚’åˆæœŸåŒ–
         launchMiniCameraUIController.InitializeMoveArea();
     }
 
     /// <summary>
-    /// ‘S‚Ä‚ÌƒK[ƒh‚ÌˆÚ“®‚ªŠ®—¹‚µ‚½‚©”»’è‚·‚é
+    /// å…¨ã¦ã®ã‚¬ãƒ¼ãƒ‰ã®ç§»å‹•ãŒå®Œäº†ã—ãŸã‹åˆ¤å®šã™ã‚‹
     /// </summary>
     private bool IsAllGuardMoveEnd()
     {
+        // ã™ã¹ã¦ã®ã‚¬ãƒ¼ãƒ‰ã®ç§»å‹•çµ‚äº†ãƒ•ãƒ©ã‚°ã‚’è¦‹ã‚‹
         foreach (GuardRotator guard in guardRotator)
         {
+            // ã‚¬ãƒ¼ãƒ‰ã®ç§»å‹•ãŒæœªå®Œäº†æ™‚ã¯falseã‚’è¿”ã™
             if (!guard.MoveEnd)
             {
                 return false;
@@ -81,15 +88,15 @@ public class UIManager : MonoBehaviour
 
 
     /// <summary>
-    /// ƒQ[ƒ€‰æ–Ê‚©‚çƒQ[ƒ€ƒI[ƒo[‰æ–Ê‚É‘JˆÚ‚·‚éˆ—
+    /// ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼UIã‚’è¡¨ç¤ºã™ã‚‹
     /// </summary>
     public void ShowGameOverUI()
     {
-        // ƒQ[ƒ€’†UI‚ğ”ñ•\¦‚É‚·‚é
+        // ã‚²ãƒ¼ãƒ ä¸­UIã‚’éè¡¨ç¤ºã«ã™ã‚‹
         gameUIController.ChangeGameUIState(false);
         gameUIController.ChangeLaunchCameraUIState(false);
 
-        // ƒQ[ƒ€ƒI[ƒo[UI‚ğ•\¦‚·‚é
+        // ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼UIã‚’è¡¨ç¤ºã™ã‚‹
         gameOverUIController.ChangeGameOverUIState(true);
     }
 }

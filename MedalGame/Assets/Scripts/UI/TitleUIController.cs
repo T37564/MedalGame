@@ -7,16 +7,16 @@ using UnityEngine.UI;
 /// </summary>
 public class TitleUIController : MonoBehaviour
 {
-    // フェイド時の透明度
-    private const float FADE_ALPHA = 0.1f;
-    // フェイドにかかる時間
-    private const float FADE_DURATION = 0.8f;
+    // フェード時の目標透明度
+    private readonly float FADE_TARGET_ALPHA = 0.1f;
+    // フェードにかかる時間
+    private readonly float FADE_DURATION = 0.8f;
 
 
-    [Header("タイトルのキャンバス")]
+    [Header("タイトルCanvas")]
     [SerializeField] private Canvas titleCanvas = null;
 
-    [Header("TAP TO START画像")]
+    [Header("TAP TO STARTの画像")]
     [SerializeField] private Image titleTextImage = null;
 
     /// <summary>
@@ -38,13 +38,13 @@ public class TitleUIController : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        // タイトルUIを繰り返しフェードイン、アウトさせる
-        titleTextImage.DOFade(FADE_ALPHA, FADE_DURATION).SetLoops(-1, LoopType.Yoyo);
+        // 「TAP TO START」画像を繰り返しフェードイン・フェードアウトさせる
+        titleTextImage.DOFade(FADE_TARGET_ALPHA, FADE_DURATION).SetLoops(-1, LoopType.Yoyo);
     }
 
 
     /// <summary>
-    /// タイトルUIのアニメーションを停止する
+    /// 「TAP TO START」画像のフェードアニメーションを停止する
     /// </summary>
     private void OnDisable()
     {

@@ -2,15 +2,19 @@
 using UnityEngine;
 
 /// <summary>
-/// ゲーム中のUI更新処理などを行うクラス
+/// ゲーム中のUIの更新や表示切り替えを管理するクラス
 /// </summary>
 public class GameUIController : MonoBehaviour
 {
-    [Header("メダル枚数表示用テキスト")]
-    [SerializeField] private TMP_Text medalCount = null;
+    // 使用中のメダル枚数表示に使用する先頭文字
+    private readonly string ACTIVE_MEDAL_TEXT = "ActiveMedal";
 
-    [Header("現在の使用メダル枚数表示用テキスト")]
-    [SerializeField] private TMP_Text activeMedalCount = null;
+
+    [Header("メダル枚数表示用Text")]
+    [SerializeField] private TMP_Text medalCountText = null;
+
+    [Header("現在の使用メダル枚数表示用Text")]
+    [SerializeField] private TMP_Text activeMedalCountText = null;
 
     [Header("ゲーム中のUI")]
     [SerializeField] private Canvas gameCanvas = null;
@@ -18,7 +22,7 @@ public class GameUIController : MonoBehaviour
     [Header("LaunchCameraUI")]
     [SerializeField] private Canvas launchCameraUI = null;
 
-    [Header("メダルプールマネージャー")]
+    [Header("メダルプールマネージャー参照用")]
     [SerializeField] private MedalPoolManager medalPoolManager = null;
 
     /// <summary>
@@ -26,16 +30,16 @@ public class GameUIController : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        activeMedalCount.text = $"ActiveMedal:{medalPoolManager.ActiveMedalCount}";
+        activeMedalCountText.text = $"{ACTIVE_MEDAL_TEXT} {medalPoolManager.ActiveMedalCount}";
     }
 
 
     /// <summary>
-    /// コインの枚数を表示するUIの更新
+    /// メダル枚数表示を更新する
     /// </summary>
     public void UpdateMedalCountUI(int currentMedal)
     {
-        medalCount.text = currentMedal.ToString();
+        medalCountText.text = currentMedal.ToString();
     }
 
 

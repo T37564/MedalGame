@@ -1,15 +1,15 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 /// <summary>
-/// UI‚ğSafeArea“à‚Éû‚ß‚éƒNƒ‰ƒX
+/// UIã‚’SafeAreaå†…ã«åã‚ã‚‹ã‚¯ãƒ©ã‚¹
 /// </summary>
 public class SafeArea : MonoBehaviour
 {
-    // SafeArea‚ğ“K—p‚·‚é©g‚ÌRectTransform
+    // SafeAreaã‚’é©ç”¨ã™ã‚‹è‡ªèº«ã®RectTransform
     private RectTransform safeAreaRect = null;
 
     /// <summary>
-    /// Awake‚ÉSafeArea‚ğ“K—p‚·‚éˆ—
+    /// SafeAreaã®é©ç”¨ã‚’è¡Œã†
     /// </summary>
     private void Awake()
     {
@@ -18,31 +18,31 @@ public class SafeArea : MonoBehaviour
     }
 
     /// <summary>
-    /// UI‚ğSafeArea“à‚Éû‚ß‚éˆ—
+    /// UIã‚’SafeAreaå†…ã«åã‚ã‚‹å‡¦ç†
     /// </summary>
     private void ApplySafeArea()
     {
-        // ‰æ–Ê‚ÌSafeArea‚ğæ“¾
+        // ç”»é¢ã®SafeAreaã‚’å–å¾—(ãƒãƒƒãƒã‚„ãƒ›ãƒ¼ãƒ ãƒãƒ¼ã‚’é¿ã‘ã‚‹ãŸã‚ã®ç¯„å›²)
         Rect safeArea = Screen.safeArea;
 
-        // SafeArea‚ÌˆÊ’u‚ÆƒTƒCƒY‚ğ‰æ–ÊƒTƒCƒY‚ÅŠ„‚Á‚ÄAƒAƒ“ƒJ[‚Ì’l‚É•ÏŠ·
+        // SafeAreaã®ä½ç½®ã¨ã‚µã‚¤ã‚ºã‚’ç”»é¢ã‚µã‚¤ã‚ºã§å‰²ã£ã¦ã€ã‚¢ãƒ³ã‚«ãƒ¼ã®å€¤ã«å¤‰æ›
         Vector2 minAnchor = safeArea.position;
 
-        // SafeArea‚Ì‰Eã‚ÌˆÊ’u‚ğŒvZ
+        // SafeAreaã®å³ä¸Šåº§æ¨™ã‚’è¨ˆç®—
         Vector2 maxAnchor = safeArea.position + safeArea.size;
 
-        // 0.0`1.0‚ÌƒAƒ“ƒJ[À•W‚Ö•ÏŠ·
+        // 0.0ï½1.0ã®ã‚¢ãƒ³ã‚«ãƒ¼åº§æ¨™ã¸å¤‰æ›
         minAnchor.x /= Screen.width;
         minAnchor.y /= Screen.height;
 
         maxAnchor.x /= Screen.width;
         maxAnchor.y /= Screen.height;
 
-        // RectTransform‚ÌƒAƒ“ƒJ[‚ğSafeArea‚É‡‚í‚¹‚Äİ’è
+        // RectTransformã®ã‚¢ãƒ³ã‚«ãƒ¼ã‚’SafeAreaã«åˆã‚ã›ã¦è¨­å®š
         safeAreaRect.anchorMin = minAnchor;
         safeAreaRect.anchorMax = maxAnchor;
 
-        // ƒIƒtƒZƒbƒg‚ğ0‚Éİ’è‚µ‚ÄAUI‚ªSafeArea“à‚Éû‚Ü‚é‚æ‚¤‚É‚·‚é
+        // ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚’0ã«è¨­å®šã—ã¦ã€UIãŒSafeAreaå†…ã«åã¾ã‚‹ã‚ˆã†ã«ã™ã‚‹
         safeAreaRect.offsetMin = Vector2.zero;
         safeAreaRect.offsetMax = Vector2.zero;
     }

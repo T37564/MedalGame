@@ -1,48 +1,49 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 /// <summary>
-/// ’[‚É‚æ‚Á‚½ƒRƒCƒ“‚ğŠñ‚¹‚éƒMƒ~ƒbƒN
+/// ç«¯ã«ã‚ˆã£ãŸã‚³ã‚¤ãƒ³ã‚’å¯„ã›ã‚‹ã‚®ãƒŸãƒƒã‚¯
 /// </summary>
 public class GuardRotator : MonoBehaviour
 {
-    // ƒK[ƒh‚Ì‰ñ“]‘¬“x
-    private const float ROTATION_SPEED = 10.0f;
+    // ã‚¬ãƒ¼ãƒ‰ã®å›è»¢é€Ÿåº¦
+    private readonly float ROTATION_SPEED = 10.0f;
 
-    [Header("ƒK[ƒh‚Ì‰ñ“]Šp“x")]
+    // ã‚¬ãƒ¼ãƒ‰ç§»å‹•è¨±å®¹ç¯„å›²
+    private readonly float ALLOWABLE_ANGULAR_DIFFERENCE = 0.5f;
+
+    [Header("ã‚¬ãƒ¼ãƒ‰ã®å›è»¢è§’åº¦")]
     [SerializeField] private Vector3 guardRotationAngle = Vector3.zero;
 
     /// <summary>
-    /// ˆÚ“®‚ªI—¹‚µ‚½‚©
+    /// ã‚¬ãƒ¼ãƒ‰ã®å›è»¢ãŒå®Œäº†ã—ãŸã‹
     /// </summary>
     public bool MoveEnd { get; private set; }
 
     /// <summary>
-    /// ƒK[ƒh‚ğw’è‚µ‚½Šp“x‚Ü‚Å‰ñ“]‚³‚¹‚é
+    /// ã‚¬ãƒ¼ãƒ‰ã‚’æŒ‡å®šã—ãŸè§’åº¦ã¾ã§å›è»¢ã•ã›ã‚‹
     /// </summary>
     private void Update()
     {
-        // Œ»İ‚Ì‰ñ“]Šp“x‚Æ–Ú•WŠp“x‚Ì·‚ğŠm”F‚·‚é
-        if (Quaternion.Angle(transform.rotation, Quaternion.Euler(guardRotationAngle)) < 0.5f)
+        // ç¾åœ¨ã®å›è»¢è§’åº¦ã¨ç›®æ¨™è§’åº¦ã®å·®ã‚’ç¢ºèªã™ã‚‹
+        if (Quaternion.Angle(transform.rotation, Quaternion.Euler(guardRotationAngle)) < ALLOWABLE_ANGULAR_DIFFERENCE)
         {
-
-            if (!MoveEnd) MoveEnd = true;
+            // ã‚¬ãƒ¼ãƒ‰ã®å›è»¢å®Œäº†ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
+            if (!MoveEnd)
+            {
+                MoveEnd = true;
+            }
 
             return;
         }
 
 
-        // Œ»İ‚ÌƒK[ƒh‚Ì‰ñ“]Šp“x‚ğæ“¾
+        // ç¾åœ¨ã®ã‚¬ãƒ¼ãƒ‰ã®å›è»¢è§’åº¦ã‚’å–å¾—
         Vector3 currentRotation = transform.eulerAngles;
 
-        // Ÿ‚Ì‰ñ“]Šp“x‚ğŒvZ‚·‚é
-        Vector3 nextRotation =
-            Vector3.MoveTowards(
-                currentRotation,
-                guardRotationAngle,
-                ROTATION_SPEED * Time.deltaTime
-            );
+        // æ¬¡ã®å›è»¢è§’åº¦ã‚’è¨ˆç®—ã™ã‚‹
+        Vector3 nextRotation = Vector3.MoveTowards(currentRotation, guardRotationAngle, ROTATION_SPEED * Time.deltaTime);
 
-        // ƒK[ƒh‚Ì‰ñ“]‚ğXV
+        // ã‚¬ãƒ¼ãƒ‰ã®å›è»¢ã‚’æ›´æ–°
         transform.rotation = Quaternion.Euler(nextRotation);
     }
 }

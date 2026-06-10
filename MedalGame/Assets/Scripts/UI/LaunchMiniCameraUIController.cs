@@ -5,6 +5,10 @@
 /// </summary>
 public class LaunchMiniCameraUIController : MonoBehaviour
 {
+    // カメラのサイズを半分にするときに使用
+    private readonly float HALF_DIVISOR = 2.0f;
+
+
     [Header("ミニカメラ")]
     [SerializeField] private RectTransform miniCamera = null;
 
@@ -14,18 +18,18 @@ public class LaunchMiniCameraUIController : MonoBehaviour
     [Header("ドラッグできる範囲のフレーム一覧")]
     [SerializeField] private RectTransform[] dragFrames = null;
 
+
     // 前回のタッチ位置を保持
     private Vector2 previousPosition = Vector2.zero;
 
-    // ドラッグ判定に使用するフレーム一覧
+    // ドラッグ可能範囲(最小、最大)
+    private Vector2 minMoveRange = Vector2.zero;
+    private Vector2 maxMoveRange = Vector2.zero;
+
+    /// <summary>
+    /// ドラッグ判定に使用するフレーム一覧
+    /// </summary>
     public RectTransform[] MiniCameraDragFrames => dragFrames;
-
-    // ドラッグ可能範囲
-    private float minX = 0.0f;
-    private float maxX = 0.0f;
-    private float minY = 0.0f;
-    private float maxY = 0.0f;
-
 
     /// <summary>
     /// ミニカメラの移動可能範囲を計算して初期化する処理
@@ -42,29 +46,28 @@ public class LaunchMiniCameraUIController : MonoBehaviour
 
         // ミニカメラの中心が移動可能範囲内に収まるように、
         // 移動可能範囲の端からミニカメラの半分の幅と高さを引いて計算
-        minX = -(areaWidth / 2f) + (miniWidth / 2f);
-        maxX = (areaWidth / 2f) - (miniWidth / 2f);
-
-        minY = -(areaHeight / 2f) + (miniHeight / 2f);
-        maxY = (areaHeight / 2f) - (miniHeight / 2f);
+        minMoveRange = new Vector2(-(areaWidth / HALF_DIVISOR) + (miniWidth / HALF_DIVISOR),
+                                    -(areaHeight / HALF_DIVISOR) + (miniHeight / HALF_DIVISOR));
+        maxMoveRange = new Vector2((areaWidth / HALF_DIVISOR) - (miniWidth / HALF_DIVISOR),
+                                    (areaHeight / HALF_DIVISOR) - (miniHeight / HALF_DIVISOR));
     }
 
     /// <summary>
     /// ミニカメラを移動させる処理
     /// </summary>
-    public void SlideCamera(Vector2 touchPosition)
+    public void MoveMiniCamera(Vector2 touchPosition)
     {
         // ドラッグ開始位置と現在のタッチ位置の差分を計算
-        Vector2 delta = touchPosition - previousPosition;
+        Vector2 dragDelta = touchPosition - previousPosition;
 
         // ミニカメラを移動
-        miniCamera.anchoredPosition += delta;
+        miniCamera.anchoredPosition += dragDelta;
 
         Vector2 position = miniCamera.anchoredPosition;
 
         // 移動可能範囲内へ制限
-        position.x = Mathf.Clamp(position.x, minX, maxX);
-        position.y = Mathf.Clamp(position.y, minY, maxY);
+        position.x = Mathf.Clamp(position.x, minMoveRange.x, maxMoveRange.x);
+        position.y = Mathf.Clamp(position.y, minMoveRange.y, maxMoveRange.y);
 
         // 制限後の位置を適用
         miniCamera.anchoredPosition = position;
