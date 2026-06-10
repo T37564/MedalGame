@@ -1,4 +1,4 @@
-using DG.Tweening;
+ï»¿using DG.Tweening;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -6,81 +6,86 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
-/// ƒQ[ƒ€ƒI[ƒo[UI‚ÌŠÇ—ƒNƒ‰ƒX
+/// ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼UIã®ç®¡ç†ã‚¯ãƒ©ã‚¹
 /// </summary>
 public class GameOverUIController : MonoBehaviour
 {
-    // ƒXƒRƒAƒeƒLƒXƒg‚ÌŠg‘å”{—¦
-    private const float SCALE_RATE = 1.2f;
+    // ã‚«ã‚¦ãƒ³ãƒˆãƒ€ã‚¦ãƒ³æ™‚ã«ä½¿ç”¨ã™ã‚‹æœ€å¤§æ™‚é–“
+    private readonly int MAX_COUNT_DOWN_TIME = 5;
 
-    // Šg‘åk¬ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌŠÔ
-    private const float SCALE_DURATION = 0.5f;
+    // ã‚¹ã‚³ã‚¢ãƒ†ã‚­ã‚¹ãƒˆã®æ‹¡å¤§å€ç‡
+    private readonly float SCALE_RATE = 1.2f;
 
-    // FillAmount‚ÌÅ‘å’l
-    private const float MAX_FILL_AMOUNT = 1.0f;
+    // æ‹¡å¤§ç¸®å°ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®æ™‚é–“
+    private readonly float SCALE_DURATION = 0.5f;
 
-    // ƒJƒEƒ“ƒgƒ_ƒEƒ“‚³‚¹‚éŠÔ
-    private const float COUNT_DOWN_TIME = 1.0f;
+    // ã‚«ã‚¦ãƒ³ãƒˆãƒ€ã‚¦ãƒ³ã•ã›ã‚‹æ™‚é–“
+    private readonly float COUNT_DOWN_TIME = 1.0f;
 
-    // ƒJƒEƒ“ƒgƒ_ƒEƒ“‚Ég—p‚·‚éÅ‘åŠÔ
-    private const int MAX_COUNT_DOWN_TIME = 5;
+    // èª­ã¿è¾¼ã‚€ã‚·ãƒ¼ãƒ³åï¼ˆã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³ï¼‰
+    private readonly string LOAD_SCENE_NAME = "GameScene";
 
 
-
-    [Header("ƒQƒbƒg‚µ‚½ƒƒ_ƒ‹‚Ì–‡”‚ğ“ü‚ê‚Ä‚¢‚éText")]
+    [Header("ã‚²ãƒƒãƒˆã—ãŸãƒ¡ãƒ€ãƒ«ã®æšæ•°ã‚’å…¥ã‚Œã¦ã„ã‚‹Text")]
     [SerializeField] private TMP_Text scoreText = null;
 
-    [Header("ƒQ[ƒ€ƒI[ƒo[‚ÌUI")]
+    [Header("ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼æ™‚ã®UI")]
     [SerializeField] private Canvas gameOverCanvas = null;
 
-    [Header("ƒJƒEƒ“ƒgƒ_ƒEƒ“‚Ég—p‚·‚éText")]
+    [Header("ã‚«ã‚¦ãƒ³ãƒˆãƒ€ã‚¦ãƒ³æ™‚ã«ä½¿ç”¨ã™ã‚‹Text")]
     [SerializeField] private TMP_Text countDownText = null;
 
-    [Header("ƒJƒEƒ“ƒgƒ_ƒEƒ“‚Ég—p‚·‚éImage")]
+    [Header("ã‚«ã‚¦ãƒ³ãƒˆãƒ€ã‚¦ãƒ³æ™‚ã«ä½¿ç”¨ã™ã‚‹Image")]
     [SerializeField] private Image countDownImage = null;
 
     /// <summary>
-    /// ƒXƒRƒAƒeƒLƒXƒg‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ğ’â~‚·‚é
+    /// ã‚¹ã‚³ã‚¢ãƒ†ã‚­ã‚¹ãƒˆã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’åœæ­¢ã™ã‚‹
     /// </summary>
     private void OnDisable()
     {
+        // scoreTextãŒå­˜åœ¨ã™ã‚‹å ´åˆã®ã¿ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’åœæ­¢ã™ã‚‹
         if (scoreText != null)
+        {
             scoreText.rectTransform.DOKill();
+        }
     }
 
     /// <summary>
-    /// ƒQ[ƒ€ƒI[ƒo[UI‚ğ•\¦‚µAƒXƒRƒAƒeƒLƒXƒg‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ğŠJn‚·‚é
+    /// ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼UIã‚’è¡¨ç¤ºã—ã€ã‚¹ã‚³ã‚¢ãƒ†ã‚­ã‚¹ãƒˆã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’é–‹å§‹ã™ã‚‹
     /// </summary>
     public void ChangeGameOverUIState(bool isDisplay)
     {
-        // ScoreText‚ÌŠg‘åk¬‚ğŒJ‚è•Ô‚·
+        // ã‚¹ã‚³ã‚¢ãƒ†ã‚­ã‚¹ãƒˆã®æ‹¡å¤§ç¸®å°ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’é–‹å§‹ã™ã‚‹
         scoreText.rectTransform.DOScale(SCALE_RATE, SCALE_DURATION).SetLoops(-1, LoopType.Yoyo).SetUpdate(true);
+
         gameOverCanvas.gameObject.SetActive(isDisplay);
 
+        // UIã‚’5ç§’é–“è¡¨ç¤ºã•ã›ã€ã‚·ãƒ¼ãƒ³é·ç§»
         StartCoroutine(CountDownUI());
     }
 
     /// <summary>
-    /// ƒJƒEƒ“ƒgƒ_ƒEƒ“‚ğs‚¢AI—¹Œã‚ÉƒQ[ƒ€‚ğƒŠƒ[ƒh‚·‚é
+    /// ã‚«ã‚¦ãƒ³ãƒˆãƒ€ã‚¦ãƒ³ã‚’è¡Œã„ã€çµ‚äº†å¾Œã«ã‚²ãƒ¼ãƒ ã‚’ãƒªãƒ­ãƒ¼ãƒ‰ã™ã‚‹
     /// </summary>
     private IEnumerator CountDownUI()
     {
-        // ƒJƒEƒ“ƒgƒ_ƒEƒ“ŠJnˆ—
+        // // 5ã‹ã‚‰1ã¾ã§ã‚«ã‚¦ãƒ³ãƒˆãƒ€ã‚¦ãƒ³ã‚’è¡Œã†
         for (int i = MAX_COUNT_DOWN_TIME; 0 < i; i--)
         {
             countDownText.text = i.ToString();
 
-            countDownImage.fillAmount = MAX_FILL_AMOUNT;
+            // fillAmountã®å€¤ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
+            countDownImage.fillAmount = 1.0f;
 
             float timer = 0f;
 
-            // FillAmount‚ğŒ¸‚ç‚·ˆ—
+            // å††å½¢ã‚²ãƒ¼ã‚¸ã‚’å¾ã€…ã«æ¸›å°‘ã•ã›ã‚‹
             while (timer < COUNT_DOWN_TIME)
             {
-                // ƒQ[ƒ€“à‚ÌŠÔ‚ğ~‚ß‚Ä‚¢‚é‚Ì‚ÅunscaledDeltaTimeg—p
+                // ã‚²ãƒ¼ãƒ å†…ã®æ™‚é–“ã‚’æ­¢ã‚ã¦ã„ã‚‹ã®ã§unscaledDeltaTimeä½¿ç”¨
                 timer += Time.unscaledDeltaTime;
 
-                countDownImage.fillAmount = MAX_FILL_AMOUNT - timer;
+                countDownImage.fillAmount = 1.0f - timer;
 
                 yield return null;
             }
@@ -88,10 +93,10 @@ public class GameOverUIController : MonoBehaviour
 
         countDownText.text = "0";
 
-        // ƒQ[ƒ€ŠÔ‚ğŒ³‚É–ß‚·
+        // ã‚²ãƒ¼ãƒ æ™‚é–“ã‚’å…ƒã«æˆ»ã™
         Time.timeScale = 1;
 
-        // ƒQ[ƒ€ƒV[ƒ“‚ğÄ“Ç‚İ‚İ‚·‚é
-        SceneManager.LoadScene("GameScene");
+        // ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã‚’å†èª­ã¿è¾¼ã¿ã™ã‚‹
+        SceneManager.LoadScene(LOAD_SCENE_NAME);
     }
 }

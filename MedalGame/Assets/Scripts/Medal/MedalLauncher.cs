@@ -6,31 +6,27 @@
 public class MedalLauncher : MonoBehaviour
 {
     // メダルの発射速度
-    private const float LAUNCH_SPEED = 20.0f;
-
-
+    private readonly float LAUNCH_SPEED = 20.0f;
 
     [Header("メダルプール管理クラス")]
     [SerializeField] private MedalPoolManager medalPoolManager = null;
-
-    [Header("メダル枚数管理クラス")]
-    [SerializeField] private MedalManager medalManager = null;
 
     [Header("メダルを発射する位置")]
     [SerializeField] private Transform launcherPoint = null;
 
     /// <summary>
-    /// メダルを一枚生成する処理
+    /// メダルを取り出して発射する
     /// </summary>
     public void LaunchMedal(Vector3 dropPoint)
     {
         // メダルを取り出す
         GameObject rentedMedal = medalPoolManager.GetMedal();
 
-        // メダルのRigidbodyを取得
-        Rigidbody medalRigidbody = rentedMedal.GetComponent<Rigidbody>();
+        // メダルの制御クラスを取得
+        MedalController medalController = rentedMedal.GetComponent<MedalController>();
+        Rigidbody medalRigidbody = medalController.MedalRigidbody;
 
-        // 回転が残らないようにrigidbodyをリセットする
+        // 前回使用時の回転をリセットする
         rentedMedal.transform.rotation = Quaternion.identity;
 
         // 発射前に速度をリセットする
@@ -41,14 +37,11 @@ public class MedalLauncher : MonoBehaviour
         // Transform.positionではなくRigidbody.positionを使用して移動させる
         medalRigidbody.position = launcherPoint.position;
 
-        // 発射方向
-        Vector3 target = dropPoint;
-
         // 発射方向ベクトルを計算
-        Vector3 direction = (target - medalRigidbody.position).normalized * LAUNCH_SPEED;
+        Vector3 direction = (dropPoint - medalRigidbody.position).normalized * LAUNCH_SPEED;
 
 
-        // 発射方向に力を加える
+        // 発射方向の速度を設定する
         medalRigidbody.linearVelocity = direction;
     }
 }

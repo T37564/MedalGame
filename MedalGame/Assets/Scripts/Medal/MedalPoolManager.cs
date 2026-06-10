@@ -3,16 +3,15 @@ using UnityEngine;
 using UnityEngine.Pool;
 
 /// <summary>
-/// メダルをオブジェクトプールで管理する処理
+/// メダルをオブジェクトプールで管理するクラス
 /// </summary>
 public class MedalPoolManager : MonoBehaviour
 {
     // メダルの初期数
-    private const int DEFAULT_POOL_SIZE = 200;
+    private readonly int DEFAULT_POOL_SIZE = 200;
 
     // メダルの最大数
-    private const int MAX_POOL_SIZE = 300;
-
+    private readonly int MAX_POOL_SIZE = 300;
 
 
     [Header("複製するメダル")]
@@ -25,8 +24,9 @@ public class MedalPoolManager : MonoBehaviour
     private ObjectPool<GameObject> medalPool = null;
 
 
-
-    // 使用中のメダル数を取得するプロパティ
+    /// <summary>
+    /// 使用中のメダル数を取得するプロパティ
+    /// </summary>
     public int ActiveMedalCount => medalPool.CountActive;
 
 
@@ -47,16 +47,16 @@ public class MedalPoolManager : MonoBehaviour
 
         // ObjectPoolはGet→Releaseを繰り返しても1個しか生成されないため、
         // 一度すべて取得してからまとめて返却し、初期数分のメダルを事前生成する
-        List<GameObject> temp = new();
+        List<GameObject> rentedMedals = new();
 
-        //　初期数分のメダルを生成
+        // 初期数分のメダルを生成
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++)
         {
-            temp.Add(medalPool.Get());
+            rentedMedals.Add(medalPool.Get());
         }
 
         // 生成したメダルをプールへ戻す
-        foreach (GameObject medal in temp)
+        foreach (GameObject medal in rentedMedals)
         {
             medalPool.Release(medal);
         }
@@ -98,7 +98,7 @@ public class MedalPoolManager : MonoBehaviour
 
 
     /// <summary>
-    /// 外部からメダルを借りれるようにする処理
+    /// メダルをプールから取得する処理
     /// </summary>
     public GameObject GetMedal()
     {
@@ -107,7 +107,7 @@ public class MedalPoolManager : MonoBehaviour
 
 
     /// <summary>
-    /// 外部からメダルを返せるようにする処理
+    /// メダルをプールへ返却する処理
     /// </summary>
     public void ReturnMedal(GameObject medal)
     {

@@ -1,30 +1,30 @@
-using System.Collections;
+ï»¿using System.Collections;
 using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// NowLoading‚ÌUI‚ğŠÇ—‚·‚éƒNƒ‰ƒX
+/// NowLoadingæ™‚ã®UIã‚’ç®¡ç†ã™ã‚‹ã‚¯ãƒ©ã‚¹
 /// </summary>
 public class NowLoadingUIController : MonoBehaviour
 {
-    // ƒeƒLƒXƒg‚ğ•\¦‚·‚éŠÔŠu
-    private const float INTERVAL = 0.1f;
+    // ãƒ†ã‚­ã‚¹ãƒˆã‚’è¡¨ç¤ºã™ã‚‹é–“éš”
+    private readonly float INTERVAL = 0.1f;
 
-    // ƒeƒLƒXƒg‚ğ•\¦‚µ‚½Œã‚Ì‘Ò‹@ŠÔ
-    private const float WAIT_TIME = 1.0f;
+    // ãƒ†ã‚­ã‚¹ãƒˆã‚’è¡¨ç¤ºã—ãŸå¾Œã®å¾…æ©Ÿæ™‚é–“
+    private readonly float WAIT_TIME = 1.0f;
 
-    // •\¦‚·‚éƒeƒLƒXƒg
-    private const string LOADING_TEXT = "Now Loading...";
+    // è¡¨ç¤ºã™ã‚‹ãƒ†ã‚­ã‚¹ãƒˆ
+    private readonly string LOADING_TEXT = "Now Loading...";
 
 
-    [Header("Loading‚Ìg—p‚·‚éƒeƒLƒXƒg")]
+    [Header("Loadingæ™‚ã®ä½¿ç”¨ã™ã‚‹ãƒ†ã‚­ã‚¹ãƒˆ")]
     [SerializeField] private TMP_Text loadingText = null;
 
-    [Header("ƒ[ƒfƒBƒ“ƒOUIƒLƒƒƒ“ƒoƒX")]
+    [Header("ãƒ­ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°UIã‚­ãƒ£ãƒ³ãƒã‚¹")]
     [SerializeField] private Canvas loadingCanvas = null;
 
     /// <summary>
-    /// ƒ[ƒfƒBƒ“ƒOƒeƒLƒXƒg‚ğ•\¦‚·‚éƒRƒ‹[ƒ`ƒ“‚ğŠJn‚·‚é
+    /// ãƒ­ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ãƒ†ã‚­ã‚¹ãƒˆã‚’è¡¨ç¤ºã™ã‚‹ã‚³ãƒ«ãƒ¼ãƒãƒ³ã‚’é–‹å§‹ã™ã‚‹
     /// </summary>
     private void OnEnable()
     {
@@ -32,7 +32,7 @@ public class NowLoadingUIController : MonoBehaviour
     }
 
     /// <summary>
-    /// ”ñ•\¦‚É‚È‚Á‚½‚Æ‚«‚ÉƒRƒ‹[ƒ`ƒ“‚ğ’â~‚·‚é
+    /// ã‚³ãƒ«ãƒ¼ãƒãƒ³ã‚’åœæ­¢ã—ãƒ†ã‚­ã‚¹ãƒˆã‚’åˆæœŸåŒ–ã™ã‚‹
     /// </summary>
     private void OnDisable()
     {
@@ -43,28 +43,30 @@ public class NowLoadingUIController : MonoBehaviour
 
 
     /// <summary>
-    /// ˆê•¶š‚¸‚ÂƒeƒLƒXƒg‚ğ•\¦‚·‚éƒRƒ‹[ƒ`ƒ“
+    /// ä¸€æ–‡å­—ãšã¤ãƒ†ã‚­ã‚¹ãƒˆã‚’è¡¨ç¤ºã™ã‚‹ã‚³ãƒ«ãƒ¼ãƒãƒ³
     /// </summary>
     private IEnumerator ShowLoadingText()
     {
-        // –³ŒÀƒ‹[ƒv‚ÅƒeƒLƒXƒg‚ğ•\¦‚µ‘±‚¯‚é
+        // ç„¡é™ãƒ«ãƒ¼ãƒ—ã§ãƒ†ã‚­ã‚¹ãƒˆã‚’è¡¨ç¤ºã—ç¶šã‘ã‚‹
         while (true)
         {
             loadingText.text = "";
 
+            // ãƒ†ã‚­ã‚¹ãƒˆã‚’ä¸€æ–‡å­—ãšã¤è¡¨ç¤ºã™ã‚‹
             for (int i = 0; i < LOADING_TEXT.Length; i++)
             {
                 loadingText.text += LOADING_TEXT[i];
                 yield return new WaitForSeconds(INTERVAL);
             }
 
+            // ãƒ†ã‚­ã‚¹ãƒˆè¡¨ç¤ºå¾Œã«å°‘ã—å¾…æ©Ÿã™ã‚‹
             yield return new WaitForSeconds(WAIT_TIME);
         }
     }
 
 
     /// <summary>
-    /// ƒ[ƒfƒBƒ“ƒOƒeƒLƒXƒg‚Ì•\¦E”ñ•\¦‚ğØ‚è‘Ö‚¦‚é
+    /// ãƒ­ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°UIã®è¡¨ç¤ºçŠ¶æ…‹ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹
     /// </summary>
     public void ChangeNowLoadingUIState(bool isActive)
     {

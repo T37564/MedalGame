@@ -1,18 +1,23 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// 他クラスで使用するRigidbodyを保持するクラス
+/// メダルの管理や回収処理を行うクラス
 /// </summary>
 public class MedalController : MonoBehaviour
 {
-    // 自分自身についているRigidbodyを取得して保持するプロパティ
-    public Rigidbody MedalRigidbody { get; private set; }
+    // 衝突したときに反応してほしいタグ名
+    private readonly string COLLECTION_POSITION_TAG = "CollectionPosition";
 
     // メダルプール管理クラス参照用
     private MedalPoolManager medalPoolManager = null;
 
     /// <summary>
-    /// Rigidbodyを取得してプロパティに保持する処理
+    /// 自分自身についているRigidbodyを取得して保持するプロパティ
+    /// </summary>
+    public Rigidbody MedalRigidbody { get; private set; }
+
+    /// <summary>
+    /// 必要なコンポーネントや参照を取得する
     /// </summary>
     private void Awake()
     {
@@ -21,22 +26,21 @@ public class MedalController : MonoBehaviour
     }
 
     /// <summary>
-    /// 特定の位置にメダルが落下したときにメダルを返却する処理
+    /// 回収エリアに衝突したらメダルを返却する
     /// </summary>
     private void OnCollisionEnter(Collision collision)
     {
-        // メダルが地面に衝突したとき、メダルを返却する
-        if (collision.gameObject.CompareTag("CollectionPosition"))
+        // 回収エリアに衝突したらメダルを返却する
+        if (collision.gameObject.CompareTag(COLLECTION_POSITION_TAG))
         {
-            MedalCollection("CollectionPosition");
+            ReturnMedal();
         }
     }
 
-  
     /// <summary>
-    /// 回転が残らないようにrigidbodyをリセットする処理    
+    /// メダルをオブジェクトプールへ返却する
     /// </summary>
-    public void MedalCollection(string reason)
+    public void ReturnMedal()
     {
         medalPoolManager.ReturnMedal(gameObject);
     }

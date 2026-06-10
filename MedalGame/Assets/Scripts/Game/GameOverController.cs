@@ -1,45 +1,42 @@
-using System.Runtime.InteropServices;
-using UnityEngine;
+ï»¿using UnityEngine;
 
 /// <summary>
-/// ƒQ[ƒ€ƒI[ƒo[ğŒ‚ğ”»’è‚·‚éƒNƒ‰ƒX
+/// ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼æ¡ä»¶ã‚’åˆ¤å®šã™ã‚‹ã‚¯ãƒ©ã‚¹
 /// </summary>
 public class GameOverController : MonoBehaviour
 {
-    // ƒQ[ƒ€ƒI[ƒo[‚É‚È‚éFPS‚Ì’l
-    private const float GAME_OVER_FPS_LIMIT = 30.0F;
+    // ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼åˆ¤å®šæ™‚ä½¿ç”¨ã™ã‚‹FPSã®å€¤
+    private readonly float GAME_OVER_FPS_LIMIT = 70.0f;
 
-    [Header("FPSŠÇ—ƒNƒ‰ƒXQÆ—p")]
+
+    [Header("FPSç®¡ç†ã‚¯ãƒ©ã‚¹å‚ç…§ç”¨")]
     [SerializeField] private FPSManager fpsManager = null;
 
-    [Header("UIManagerŠÇ—ƒNƒ‰ƒXQÆ—p")]
-    [SerializeField] private UIManager uiManager = null;
-
-    [Header("ƒQ[ƒ€ƒI[ƒo[‚ÌUIŠÇ—ƒNƒ‰ƒXQÆ—p")]
+    [Header("ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼æ™‚ã®UIç®¡ç†ã‚¯ãƒ©ã‚¹å‚ç…§ç”¨")]
     [SerializeField] private GameOverUIController gameOverUIController = null;
 
-    // ƒQ[ƒ€ƒI[ƒo[ˆ—‚ğÀsÏ‚İ‚©‚Ìƒtƒ‰ƒO
+    // ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼å‡¦ç†ã‚’å®Ÿè¡Œæ¸ˆã¿ã‹ã®ãƒ•ãƒ©ã‚°
     private bool isGameOverProcessed = false;
 
     /// <summary>
-    /// ƒQ[ƒ€ƒI[ƒo[”»’è‚ğs‚¤
+    /// ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼åˆ¤å®šã‚’è¡Œã†
     /// </summary>
     private void Update()
     {
-        if (!fpsManager.IsInitialized)
-        {
-            return;
-        }
+        // FPSãŒã¾ã è¨ˆç®—ã•ã‚Œã¦ã„ãªã„ã¨ãã¯åˆ¤å®šã‚’è¡Œã‚ãªã„
+        if (!fpsManager.IsInitialized) return;
 
+        // FPSãŒåˆ¤å®šå€¤ã‚’ä¸‹å›ã£ãŸå ´åˆ
         if (fpsManager.CurrentFps < GAME_OVER_FPS_LIMIT && !isGameOverProcessed)
         {
+            // ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼å‡¦ç†ã®é‡è¤‡å®Ÿè¡Œã‚’é˜²ã
             isGameOverProcessed = true;
 
-            // ƒQ[ƒ€I—¹‚ÌUI‘JˆÚˆ—
-            uiManager.ShowGameOverUI();
+            // ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼UIã‚’è¡¨ç¤ºã™ã‚‹
+            UIManager.Instance.ShowGameOverUI();
 
-            // ƒQ[ƒ€ŠÔ‚ğ’â~‚³‚¹‚é
-            Time.timeScale = 0;
+            // ã‚²ãƒ¼ãƒ æ™‚é–“ã‚’åœæ­¢ã•ã›ã‚‹
+            Time.timeScale = 0.0f;
         }
     }
 }

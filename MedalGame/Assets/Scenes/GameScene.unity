@@ -829,7 +829,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameOverController
   fpsManager: {fileID: 2081381894}
-  uiManager: {fileID: 681499570}
   gameOverUIController: {fileID: 1588012811}
 --- !u!1 &206644216
 GameObject:
@@ -1635,7 +1634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c55e79b84ca6fc3408e4fafb775ca157, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GetHoleController
-  medalManger: {fileID: 308597327}
+  medalManager: {fileID: 308597327}
 --- !u!65 &329135673
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3328,7 +3327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 174c1dc427d868445b8a3e0b4892672b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PusherController
-  upperSection: {fileID: 2095086860}
+  upperSectionTransform: {fileID: 2095086860}
   upperSectionRigidbody: {fileID: 2095086864}
   startPoint: {fileID: 1168493974}
   endPoint: {fileID: 1697564167}
@@ -3784,7 +3783,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c55e79b84ca6fc3408e4fafb775ca157, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GetHoleController
-  medalManger: {fileID: 308597327}
+  medalManager: {fileID: 308597327}
 --- !u!1 &1181374250
 GameObject:
   m_ObjectHideFlags: 0
@@ -4871,7 +4870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c55e79b84ca6fc3408e4fafb775ca157, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GetHoleController
-  medalManger: {fileID: 308597327}
+  medalManager: {fileID: 308597327}
 --- !u!65 &1441244957
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6195,7 +6194,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MedalLauncher
   medalPoolManager: {fileID: 2111437213}
-  medalManager: {fileID: 308597327}
   launcherPoint: {fileID: 822225092}
 --- !u!4 &1890039939
 Transform:
@@ -6256,8 +6254,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1df1881ce87bb5f47bc2ffe5aefe5796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameUIController
-  medalCount: {fileID: 27798209}
-  activeMedalCount: {fileID: 29402813}
+  medalCountText: {fileID: 27798209}
+  activeMedalCountText: {fileID: 29402813}
   gameCanvas: {fileID: 1698123015}
   launchCameraUI: {fileID: 1759743248}
   medalPoolManager: {fileID: 2111437213}
@@ -6831,8 +6829,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a91954f9a3e725458a6e0066d6ab5ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FPSManager
-  CurrentFps: 120
-  IsInitialized: 1
 --- !u!4 &2081381895
 Transform:
   m_ObjectHideFlags: 0

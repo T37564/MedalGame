@@ -1,45 +1,58 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 /// <summary>
-/// FPS‚ÌŒvZ‚ğs‚¤ƒNƒ‰ƒX
+/// FPSã®è¨ˆç®—ã‚’è¡Œã†ã‚¯ãƒ©ã‚¹
 /// </summary>
 public class FPSManager : MonoBehaviour
 {
-    // XVŠÔŠu
-    private float timer = 0.0f;
+    // FPSã®æ›´æ–°é–“éš”
+    private readonly float FPS_UPDATE_INTERVAL = 0.1f;
 
-    // FPSŒvZ—p
-    private float deltaTime = 0.0f;
+    // FPSè¡¨ç¤ºã‚’è¦‹ã‚„ã™ãã™ã‚‹ãŸã‚ã®å¹³æ»‘åŒ–ä¿‚æ•°
+    private readonly float SMOOTHING_COEFFICIENT = 0.1f;
+
+
+    // FPSæ›´æ–°ç”¨ã‚¿ã‚¤ãƒãƒ¼
+    private float fpsUpdateTimer = 0.0f;
+
+    // FPSè¨ˆç®—ã«ä½¿ç”¨ã™ã‚‹ãƒ•ãƒ¬ãƒ¼ãƒ æ™‚é–“
+    private float smoothedDeltaTime = 0.0f;
 
     /// <summary>
-    /// Œ»İ‚ÌFPS
+    /// ç¾åœ¨ã®FPS
     /// </summary>
     public float CurrentFps { get; private set; }
 
     /// <summary>
-    /// FPS‚ªŒvZŠJn‚³‚ê‚½‚©‚Ì”»’è
+    /// FPSã®åˆå›è¨ˆç®—ãŒå®Œäº†ã—ãŸã‹
     /// </summary>
     public bool IsInitialized { get; private set; }
 
     /// <summary>
-    /// FPS‚ğŒvZ‚µ‚ÄXV‚·‚é
+    /// FPSã‚’è¨ˆç®—ã—ã¦æ›´æ–°ã™ã‚‹
     /// </summary>
     private void Update()
     {
-        // ƒtƒŒ[ƒ€ŠÔ‚ğŠŠ‚ç‚©‚É‚·‚é
-        deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
+        // ãƒ•ãƒ¬ãƒ¼ãƒ æ™‚é–“ã‚’æ»‘ã‚‰ã‹ã«ã™ã‚‹
+        smoothedDeltaTime += (Time.deltaTime - smoothedDeltaTime) * SMOOTHING_COEFFICIENT;
 
-        timer += Time.deltaTime;
+        // FPSæ›´æ–°ç”¨ã‚¿ã‚¤ãƒãƒ¼
+        fpsUpdateTimer += Time.deltaTime;
 
-        // 0.5•b‚²‚ÆXV
-        if (timer >= 0.1f)
+        // FPSã‚’0.1ç§’ã”ã¨ã«æ›´æ–°
+        if (fpsUpdateTimer >= FPS_UPDATE_INTERVAL)
         {
-            // FPSŒvZ
-            CurrentFps = 1.0f / deltaTime;
+            // FPSè¨ˆç®—
+            CurrentFps = 1.0f / smoothedDeltaTime;
 
-            timer = 0.0f;
+            // ã‚¿ã‚¤ãƒãƒ¼ãƒªã‚»ãƒƒãƒˆ
+            fpsUpdateTimer = 0.0f;
 
-            IsInitialized = true;
+            // åˆå›FPSè¨ˆç®—å®Œäº†ã‚’çŸ¥ã‚‰ã›ã‚‹
+            if (!IsInitialized)
+            {
+                IsInitialized = true;
+            }
         }
     }
 }
