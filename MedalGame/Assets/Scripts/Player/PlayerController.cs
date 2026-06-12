@@ -5,17 +5,11 @@
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
-    [Header("UI管理クラス参照用")]
-    [SerializeField] private UIManager uiManager = null;
-
     [Header("メダル発射クラス参照用")]
     [SerializeField] private MedalLauncher medalLauncher = null;
 
     [Header("Rayを飛ばすクラス参照用")]
     [SerializeField] private RayController rayController = null;
-
-    [Header("ミニカメラを移動させるクラス参照")]
-    [SerializeField] private LaunchMiniCameraUIController launchMiniCameraUIController = null;
 
     [Header("Rayを飛ばすときに使用するカメラ")]
     [SerializeField] private Camera launchCamera = null;
@@ -69,7 +63,7 @@ public class PlayerController : MonoBehaviour
         HandlePressStart();
 
         // タイトル画面中はゲーム操作を行わない
-        if (uiManager.IsTitle) return;
+        if (UIManager.Instance.IsTitle) return;
 
         // タップ中の処理
         HandlePressing();
@@ -96,10 +90,10 @@ public class PlayerController : MonoBehaviour
         }
 
         // タイトル画面中でなければ処理しない
-        if (!uiManager.IsTitle) return;
+        if (!UIManager.Instance.IsTitle) return;
 
         // ゲーム開始のUI遷移を開始する
-        uiManager.StartGame();
+        UIManager.Instance.StartGame();
     }
 
     /// <summary>
@@ -108,7 +102,7 @@ public class PlayerController : MonoBehaviour
     private bool TryStartDrag(Vector2 touchPosition)
     {
         // ドラッグ可能エリアを確認
-        foreach (RectTransform frame in launchMiniCameraUIController.MiniCameraDragFrames)
+        foreach (RectTransform frame in UIManager.Instance.LaunchMiniCameraUIController.MiniCameraDragFrames)
         {
             // タップ位置がドラッグ可能エリア内か確認
             if (RectTransformUtility.RectangleContainsScreenPoint(frame, touchPosition))
@@ -117,7 +111,7 @@ public class PlayerController : MonoBehaviour
                 isDragging = true;
 
                 // ドラッグ開始位置を保存
-                launchMiniCameraUIController.SetPreviousPosition(touchPosition);
+                UIManager.Instance.LaunchMiniCameraUIController.SetPreviousPosition(touchPosition);
 
                 return true;
             }
@@ -140,7 +134,7 @@ public class PlayerController : MonoBehaviour
         // ドラッグ中の処理
         if (isDragging)
         {
-            launchMiniCameraUIController.MoveMiniCamera(touchPosition);
+            UIManager.Instance.LaunchMiniCameraUIController.MoveMiniCamera(touchPosition);
 
             return;
         }

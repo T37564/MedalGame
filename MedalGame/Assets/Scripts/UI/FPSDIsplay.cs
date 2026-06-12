@@ -10,10 +10,10 @@ public class FPSDisplay : MonoBehaviour
     private readonly string FPS_TEXT = "FPS:";
 
     // FPS警告表示時の値
-    private readonly float FPS_CAUTION = 90.0f;
+    private readonly float FPS_CAUTION = 100.0f;
 
     // ゲームオーバー時の値
-    private readonly float FPS_DANGER = 70.0f;
+    private readonly float FPS_DANGER = 90.0f;
 
     // FPS警告表示時の文字色
     private readonly Color ORANGE = new Color(1.0f, 0.5f, 0.0f);
