@@ -8,10 +8,10 @@ using UnityEngine.Pool;
 public class MedalPoolManager : MonoBehaviour
 {
     // メダルの初期数
-    private readonly int DEFAULT_POOL_SIZE = 200;
+    private readonly int DEFAULT_POOL_SIZE = 300;
 
     // メダルの最大数
-    private readonly int MAX_POOL_SIZE = 300;
+    private readonly int MAX_POOL_SIZE = 400;
 
 
     [Header("複製するメダル")]

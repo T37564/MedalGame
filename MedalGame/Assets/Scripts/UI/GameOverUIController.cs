@@ -10,21 +10,17 @@ using UnityEngine.UI;
 /// </summary>
 public class GameOverUIController : MonoBehaviour
 {
-    // カウントダウン時に使用する最大時間
-    private readonly int MAX_COUNT_DOWN_TIME = 5;
-
     // スコアテキストの拡大倍率
     private readonly float SCALE_RATE = 1.2f;
 
     // 拡大縮小アニメーションの時間
     private readonly float SCALE_DURATION = 0.5f;
 
-    // カウントダウンさせる時間
-    private readonly float COUNT_DOWN_TIME = 1.0f;
-
     // 読み込むシーン名（タイトルシーン）
     private readonly string LOAD_SCENE_NAME = "GameScene";
 
+    [Header("メダルマネージャー参照用")]
+    [SerializeField] private MedalManager medalManager = null;
 
     [Header("ゲットしたメダルの枚数を入れているText")]
     [SerializeField] private TMP_Text scoreText = null;
@@ -51,47 +47,28 @@ public class GameOverUIController : MonoBehaviour
     }
 
     /// <summary>
-    /// ゲームオーバーUIを表示し、スコアテキストのアニメーションを開始する
+    /// ゲームオーバーUIを表示し、リセット処理を開始する
     /// </summary>
-    public void ChangeGameOverUIState(bool isDisplay)
+    public void ShowGameOverUI()
     {
+        // スコアの更新
+        scoreText.text = medalManager.CurrentMedalCount.ToString();
+
         // スコアテキストの拡大縮小アニメーションを開始する
         scoreText.rectTransform.DOScale(SCALE_RATE, SCALE_DURATION).SetLoops(-1, LoopType.Yoyo).SetUpdate(true);
 
-        gameOverCanvas.gameObject.SetActive(isDisplay);
+        gameOverCanvas.gameObject.SetActive(true);
 
-        // UIを5秒間表示させ、シーン遷移
-        StartCoroutine(CountDownUI());
+        // カウントダウン後のリセット処理を開始する
+        StartCoroutine(ResetGame());
     }
 
     /// <summary>
-    /// カウントダウンを行い、終了後にゲームをリロードする
+    /// カウントダウン後にゲームをリセットする
     /// </summary>
-    private IEnumerator CountDownUI()
+    private IEnumerator ResetGame()
     {
-        // // 5から1までカウントダウンを行う
-        for (int i = MAX_COUNT_DOWN_TIME; 0 < i; i--)
-        {
-            countDownText.text = i.ToString();
-
-            // fillAmountの値をリセットする
-            countDownImage.fillAmount = 1.0f;
-
-            float timer = 0f;
-
-            // 円形ゲージを徐々に減少させる
-            while (timer < COUNT_DOWN_TIME)
-            {
-                // ゲーム内の時間を止めているのでunscaledDeltaTime使用
-                timer += Time.unscaledDeltaTime;
-
-                countDownImage.fillAmount = 1.0f - timer;
-
-                yield return null;
-            }
-        }
-
-        countDownText.text = "0";
+        yield return StartCoroutine(UIManager.Instance.CountDownUIController.StartCountDown(countDownText, countDownImage));
 
         // ゲーム時間を元に戻す
         Time.timeScale = 1;

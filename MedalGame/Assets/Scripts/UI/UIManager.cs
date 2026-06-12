@@ -18,13 +18,39 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [Header("ゲームオーバーUI管理クラス参照用")]
     [SerializeField] private GameOverUIController gameOverUIController = null;
 
+    [Header("ミニカメラを移動させるクラス参照用")]
+    [SerializeField] private LaunchMiniCameraUIController launchMiniCameraUIController = null;
+
+    [Header("カウントダウンUI管理クラス参照用")]
+    [SerializeField] private CountDownUIController countDownUIController = null;
+
     [Header("ギミック壁クラス参照用")]
     [SerializeField] private GuardRotator[] guardRotator = null;
 
-    [Header("ミニカメラを移動させるクラス参照")]
-    [SerializeField] private LaunchMiniCameraUIController launchMiniCameraUIController = null;
+    /// <summary>
+    /// ゲーム中UI管理クラス
+    /// </summary>
+    public GameUIController GameUIController => gameUIController;
 
+    /// <summary>
+    /// ゲームオーバーUI管理クラス
+    /// </summary>
+    public GameOverUIController GameOverUIController => gameOverUIController;
 
+    /// <summary>
+    /// ミニカメラUI管理クラス
+    /// </summary>
+    public LaunchMiniCameraUIController LaunchMiniCameraUIController => launchMiniCameraUIController;
+
+    /// <summary>
+    /// カウントダウンUI管理クラス
+    /// </summary>
+    public CountDownUIController CountDownUIController => countDownUIController;
+
+    /// <summary>
+    /// FPSの計算を開始できるか
+    /// </summary>
+    public bool CanCalculateFPS { get; private set; }
 
     /// <summary>
     /// タイトル画面中かどうかを取得するプロパティ
@@ -83,6 +109,9 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
             }
         }
 
+        // FPS計算開始を許可する
+        CanCalculateFPS = true;
+
         return true;
     }
 
@@ -97,6 +126,6 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         gameUIController.ChangeLaunchCameraUIState(false);
 
         // ゲームオーバーUIを表示する
-        gameOverUIController.ChangeGameOverUIState(true);
+        gameOverUIController.ShowGameOverUI();
     }
 }

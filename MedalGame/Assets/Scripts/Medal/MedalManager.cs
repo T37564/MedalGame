@@ -5,9 +5,6 @@
 /// </summary>
 public class MedalManager : MonoBehaviour
 {
-    [Header("ゲームUIコントローラー参照用")]
-    [SerializeField] private GameUIController gameUIController = null;
-
     /// <summary>
     /// 現在のメダルの枚数を保持するプロパティ
     /// </summary>
@@ -20,6 +17,6 @@ public class MedalManager : MonoBehaviour
     {
         CurrentMedalCount++;
 
-        gameUIController.UpdateMedalCountUI(CurrentMedalCount);
+        UIManager.Instance.GameUIController.UpdateMedalCountUI(CurrentMedalCount);
     }
 }

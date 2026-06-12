@@ -33,6 +33,9 @@ public class FPSManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        // FPS計算が開始可能になるまで処理しない
+        if (!UIManager.Instance.CanCalculateFPS) return;
+
         // フレーム時間を滑らかにする
         smoothedDeltaTime += (Time.deltaTime - smoothedDeltaTime) * SMOOTHING_COEFFICIENT;
 
